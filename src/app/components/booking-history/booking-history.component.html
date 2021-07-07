@@ -1,0 +1,43 @@
+<div class="card">
+<!-- <hr>
+<ol>
+<li *ngFor="let booking of bookings">
+    <div>
+<h4>{{booking.date}}-{{booking.flight}}-{{booking.id}}</h4>
+    </div>
+   
+
+</li>
+</ol> -->
+<p-table [value]="bookings" [scrollable]="true"  scrollHeight="200px">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
+            Ticket Booking History
+        </div>
+        <!-- <div class="p-d-flex">
+            <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        </div> -->
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Date</th>
+            <th>Flight</th>
+            <th>Logo</th>
+            <th>Price</th>
+            <th>Price</th>          
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-book>
+        <tr>
+            <td>{{book.date}}</td>
+            <td>{{book.flight}}</td>
+            <td><img [src]="book.image" [alt]="book.id" width="100" height="75" class="p-shadow-4" /></td>
+            <td>{{book.price}}</td> 
+            <td><p-button  (onClick)="ticketDetail(book)" label="View Details"></p-button></td>         
+        </tr>
+    </ng-template>
+  </p-table>
+  </div>

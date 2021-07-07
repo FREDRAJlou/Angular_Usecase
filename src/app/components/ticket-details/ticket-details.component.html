@@ -1,0 +1,76 @@
+
+    <p-splitter [style]="{'height': '300px'}" [panelSizes]="[20,80]" [minSizes]="[10,0]" styleClass="p-mb-5">
+        <!-- <ng-template pTemplate>
+            <div class="p-col p-d-flex p-ai-center p-jc-center">
+                Panel 1
+            </div>
+        </ng-template> -->
+        <ng-template pTemplate>
+            <p-splitter layout="vertical" [panelSizes]="[15,85]">
+                <ng-template pTemplate>
+                    <div class="p-col p-d-flex p-ai-center p-jc-center p-mx-auto">
+                     <img src="{{ticket.image}}" wight="100" height="70"/>
+                     <div class="p-mx-auto" style="display:inline">
+                     <h2 class="p-mx-auto" [ngStyle]="{textAlign:'center',display:'inline'}">{{ticket.flight}} - {{ticket.date}}</h2>
+                    </div>
+                </div>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-splitter [panelSizes]="[40,80]">
+                        
+                        <ng-template pTemplate>
+                            
+                            <div class="p-col p-d-flex p-ai-center p-jc-center" style="padding: 10px 10px">
+                                <div style="text-align:center;" >
+                                    <h3>Travel Details</h3>
+                                 </div>
+                               <h4>From : {{ticket.from}}</h4>
+                               <h4>To : {{ticket.to}}</h4>
+                               <h4>Trip : {{ticket.type}}</h4>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate>
+                            <div class="p-col p-d-flex p-ai-center p-jc-center">
+                                <!-- <div style="text-align:center;" >
+                                    <h3>Passenger Details</h3>
+                                    
+                                 </div> -->
+                                 <div>
+                                    <p-table [value]="ticket.passengers" [scrollable]="true"  scrollHeight="200px">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
+                                                <h3>Passenger Details</h3>
+                                            </div>
+                                            <!-- <div class="p-d-flex">
+                                                <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                                                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                                                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+                                            </div> -->
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>age</th>
+                                                <th>Phone Number</th>
+                                                       
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-pass>
+                                            <tr>
+                                              
+                                                <td>{{pass.name}}</td>
+                                                <td>{{pass.age}}</td> 
+                                                <td>{{pass.phone}}</td>     
+                                            </tr>
+                                        </ng-template>
+                                      </p-table>
+
+                                 </div>
+                            </div>
+                        </ng-template>
+                    </p-splitter>
+                </ng-template>
+            </p-splitter>
+        </ng-template>
+    </p-splitter>
