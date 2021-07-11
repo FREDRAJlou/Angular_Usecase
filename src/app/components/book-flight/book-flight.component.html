@@ -1,1 +1,141 @@
-<p>book-flight works!</p>
+
+<p-toast></p-toast>
+<p-panel header="Book Flight" >
+    <p-radioButton name="TravelType" value="One Way" label="One Way" [(ngModel)]="ticket.type"></p-radioButton>
+    <span style="width:20px"></span>
+    <p-radioButton name="TravelType" value="Round Trip" label="Round Trip" [(ngModel)]="ticket.type"></p-radioButton>
+
+<div class="p-grid p-fluid">
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">From :</span>
+            <input type="text" pInputText [(ngModel)]="ticket.from" placeholder="From">         
+        </div>
+    </div>
+    
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">To:</span>
+            <input type="text" pInputText [(ngModel)]="ticket.to" placeholder="To">    
+        </div>
+    </div>
+    
+    </div>
+    <div>
+        <p-splitter [style]="{'height': '300px'}" >
+            <ng-template pTemplate>
+                <div  style="width:90%;margin-left: 10px;">
+                    <div>
+                    <span class="p-inputgroup-addon">Onward Journey</span>
+                </div>
+                    <div class="p-grid p-fluid">
+                        <div>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">Date :</span>
+                        <p-calendar [(ngModel)]="ticket.date" dateFormat="dd/mm/yy" [showButtonBar]="true"
+                        [minDate]="minDate" [readonlyInput]="true" [showTime]="true" hourFormat="24"></p-calendar>
+                    </div> 
+                    
+                    <p-table [value]="flight" [scrollable]="true"  scrollHeight="200px"
+                    selectionMode="single" [(selection)]="service.selectedFlight" dataKey="flight.id"
+                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
+                                Available Flights
+                            </div>
+                            <!-- <div class="p-d-flex">
+                                <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+                            </div> -->
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Logo</th>
+                                <!-- <th>Flight</th> -->
+                                <th>Price</th>
+                                <th>Depature</th>
+                                <!-- <th>From</th>
+                                <th>To</th> -->
+                                <!-- <th></th>           -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-flight>
+                            <tr [pSelectableRow]="flight">
+                                <td><img [src]="flight.logo" [alt]="flight.name" width="50" height="35" class="p-shadow-4" /></td>
+                                <!-- <td>{{flight.name}}</td> -->
+                                <td>{{flight.price}}</td> 
+                                <td>{{flight.depature|date : 'short'}}</td>
+                                <!-- <td>{{flight.from}}</td>  
+                                <td>{{flight.to}}</td>  
+                                <td></td>          -->
+                            </tr>
+                        </ng-template>
+                      </p-table>
+                    </div>
+                </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate >
+                  
+                <div  *ngIf="ticket.type=='Round Trip'">
+                    <div>
+                    <span class="p-inputgroup-addon">Return Journey</span>
+                </div>
+                    <div class="p-grid p-fluid" style="width:90%;margin-left: 10px;" >
+                       <div >
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">Date :</span>
+                        <p-calendar [(ngModel)]="ticket.returnDate" dateFormat="dd/mm/yy" [showButtonBar]="true"
+                        [minDate]="minDate" [readonlyInput]="true" [showTime]="true" hourFormat="24"></p-calendar>
+                    </div> 
+                    </div>
+                    </div>
+                    <p-table   [value]="returnFlight" [scrollable]="true"  scrollHeight="200px"
+                    selectionMode="single" [(selection)]="service.selectedReturnFlight" dataKey="flight.id"
+                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
+                                Available Flights
+                            </div>
+                            <!-- <div class="p-d-flex">
+                                <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+                            </div> -->
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Logo</th>
+                                <!-- <th>Flight</th> -->
+                                <th>Price</th>
+                                <th>Depature</th>
+                                <!-- <th>From</th>
+                                <th>To</th>
+                                <th></th>           -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-flight>
+                            <tr [pSelectableRow]="flight">
+                                <td><img [src]="flight.logo" [alt]="flight.name" width="50" height="35" class="p-shadow-4" /></td>
+                                <!-- <td>{{flight.name}}</td> -->
+                                <td>{{flight.price}}</td> 
+                                <td>{{flight.depature|date : 'short'}}</td>
+                                <!-- <td>{{flight.from}}</td>  
+                                <td>{{flight.to}}</td>  
+                                <td></td>          -->
+                            </tr>
+                        </ng-template>
+                      </p-table>
+                </div>
+            </ng-template>
+        </p-splitter>
+    
+
+</div>
+<ng-template pTemplate="footer">
+<p-button label="Continue Booking" (onClick)="continueBooking()"></p-button>
+</ng-template>
+</p-panel>

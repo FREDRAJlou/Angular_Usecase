@@ -1,0 +1,15 @@
+
+<p-card>
+    <h2>Welcome <span *ngIf="user">{{user.name}}</span></h2>
+    <h3>What can we do for you?</h3>
+    <div *ngIf="!user.name">
+    <p-button  (onClick)="searchFlight()" label="Search Flights"></p-button><br>
+    <p-button  (onClick)="bookTicket()" label="Book Ticket"></p-button><br>
+    <p-button  (onClick)="estimateTicket()" label="Estimate Travel"></p-button>
+</div>
+<div *ngIf="user.name">
+    <p-button  (onClick)="manageBookings()" label="Your Bookings"></p-button><br>
+    <p-button  (onClick)="bookTicket()" label="Book Ticket"></p-button><br>
+    <p-button  (onClick)="viewBookings()" label="View Bookings"></p-button>
+</div>
+    <p-card>
