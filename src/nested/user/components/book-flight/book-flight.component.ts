@@ -27,7 +27,12 @@ export class BookFlightComponent implements OnInit {
   }
 
   populateFlights(){
-    this.service.getFlights('bookings?from like'+this.ticket.from+'&to like'+this.ticket.to).subscribe(data=>this.flight=data);
+    console.log("inside populate flights");
+    this.service.getFlights('?').subscribe(data=>{
+      this.flight=data;
+      this.returnFlight=data;
+      console.log(this.flight);
+    });
   }
 
   onRowSelect(event:any){

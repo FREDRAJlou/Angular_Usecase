@@ -24,7 +24,7 @@ export class FlightService {
 }
 
   getFlights(query:string): Observable<Booking[]>{
-   return  this.http.get<Booking[]>(this.serviceUrl+'bookings'+query);
+   return  this.http.get<Booking[]>(this.serviceUrl+'flights'+query);
   }
 
   cancelTicket(id:any){

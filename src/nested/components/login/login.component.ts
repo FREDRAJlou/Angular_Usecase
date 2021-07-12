@@ -73,6 +73,9 @@ var userData= data[0];
     this.navService.setUserNavigation();
     console.log('navigating...');
     this.route.navigate(['./user/bookingHistory']);
+  }else if(this.user.role=="ADMIN"){
+    this.navService.setAdminNavigation();
+    this.route.navigate(['./admin/manageAirlines']);
   }else{
     this.navService.setAdminNavigation();
   }

@@ -23,9 +23,28 @@ export class FlightService {
   });
 }
 
-  getFlights(): Observable<Booking[]>{
-   return  this.http.get<Booking[]>(this.serviceUrl+'bookings');
-  }
+saveFlight(flight:any){
+  console.log('Saving...'+flight);
+  this.http.post(this.serviceUrl+'flights',flight).subscribe(data => {
+    console.log(data);
+  
+});
+}
+
+updateFlight(flight:any){
+  console.log('Saving...'+flight);
+  this.http.put(this.serviceUrl+'flights',flight).subscribe(data => {
+    console.log(data);
+  
+});
+}
+
+getFlights(query:string): Observable<Booking[]>{
+  return  this.http.get<Booking[]>(this.serviceUrl+'flights'+query);
+ }
+  getFlight(name:string): Observable<Booking[]>{
+    return  this.http.get<Booking[]>(this.serviceUrl+'flights?name='+name);
+   }
 
   cancelTicket(id:any){
     console.log(id);

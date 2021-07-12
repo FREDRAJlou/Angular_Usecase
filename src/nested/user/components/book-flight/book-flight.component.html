@@ -21,6 +21,7 @@
     </div>
     
     </div>
+    <p-button label="Find Flights" (onClick)="populateFlights()"></p-button>
     <div>
         <p-splitter [style]="{'height': '300px'}" >
             <ng-template pTemplate>
@@ -37,7 +38,7 @@
                     </div> 
                     
                     <p-table [value]="flight" [scrollable]="true"  scrollHeight="200px"
-                    selectionMode="single" [(selection)]="service.selectedFlight" dataKey="flight.id"
+                    selectionMode="single" [(selection)]="service.selectedFlight" dataKey="id"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                         <ng-template pTemplate="caption">
                             <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
@@ -61,12 +62,12 @@
                                 <!-- <th></th>           -->
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-flight>
-                            <tr [pSelectableRow]="flight">
+                        <ng-template pTemplate="body" let-flight let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="flight" [pSelectableRowIndex]="rowIndex">
                                 <td><img [src]="flight.logo" [alt]="flight.name" width="50" height="35" class="p-shadow-4" /></td>
                                 <!-- <td>{{flight.name}}</td> -->
                                 <td>{{flight.price}}</td> 
-                                <td>{{flight.depature|date : 'short'}}</td>
+                                <td>{{flight.schedule}}</td>
                                 <!-- <td>{{flight.from}}</td>  
                                 <td>{{flight.to}}</td>  
                                 <td></td>          -->
@@ -93,7 +94,7 @@
                     </div>
                     </div>
                     <p-table   [value]="returnFlight" [scrollable]="true"  scrollHeight="200px"
-                    selectionMode="single" [(selection)]="service.selectedReturnFlight" dataKey="flight.id"
+                    selectionMode="single" [(selection)]="service.selectedReturnFlight" dataKey="id"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                         <ng-template pTemplate="caption">
                             <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
@@ -117,12 +118,12 @@
                                 <th></th>           -->
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-flight>
-                            <tr [pSelectableRow]="flight">
+                        <ng-template pTemplate="body" let-flight let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="flight" [pSelectableRowIndex]="rowIndex">
                                 <td><img [src]="flight.logo" [alt]="flight.name" width="50" height="35" class="p-shadow-4" /></td>
                                 <!-- <td>{{flight.name}}</td> -->
                                 <td>{{flight.price}}</td> 
-                                <td>{{flight.depature|date : 'short'}}</td>
+                                <td>{{flight.schedule}}</td>
                                 <!-- <td>{{flight.from}}</td>  
                                 <td>{{flight.to}}</td>  
                                 <td></td>          -->

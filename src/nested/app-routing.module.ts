@@ -26,9 +26,10 @@ const routes: Routes = [
     { path: 'logout', component: HomeComponent},
     { path: 'login', component: LoginComponent},
     { path: 'user',  loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
+    { path: 'admin',  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   //  
   
-    {path:'**', redirectTo:'home' }
+    // {path:'**', redirectTo:'home' }
 ];
 
 @NgModule({

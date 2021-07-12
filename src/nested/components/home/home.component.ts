@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
     if(this.user.role=="USER"){
       console.log(this.user.name);
       this.route.navigate(['./user/bookFlight']);
+    }else if(this.user.role=="ADMIN"){
+      this.route.navigate(['./admin/manageAirlines']);
     }else{
       this.route.navigate(['./login']);
     }

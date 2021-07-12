@@ -40,9 +40,9 @@ export class NavigationService {
 
     setAdminNavigation(){
       this.userItems=[{
-        label: 'Manage Schedules', routerLink:"user/bookFlight"},
-        {label: 'Manage Discounts', routerLink:"user/manageBooking"},
-         { label: 'Manage Airlines', routerLink:"user/bookingHistory"
+        label: 'Manage Schedules', routerLink:"admin/manageSchedules"},
+        {label: 'Manage Discounts', routerLink:"admin/manageDiscounts"},
+         { label: 'Manage Airlines', routerLink:"admin/manageAirlines"
         },
         { label: 'Reports', routerLink:"./"},
         { label: 'LogOut', routerLink:"./"
