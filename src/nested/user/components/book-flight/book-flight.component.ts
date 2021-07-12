@@ -45,6 +45,7 @@ export class BookFlightComponent implements OnInit {
   }
 
   continueBooking(){
+    this.ticket.price = this.service.selectedFlight.price;
     this.shared.sendData(this.ticket);
     this.route.navigate(['./user/checkoutTicket']);
   }

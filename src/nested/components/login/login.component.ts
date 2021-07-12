@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavigationService } from 'src/app/services/navigation.service';
+import { NavigationService } from 'src/nested/services/navigation.service';
 import { UserService } from 'src/app/services/user.service';
 import {Message} from 'primeng//api';
 import {MessageService} from 'primeng/api';
@@ -72,10 +72,10 @@ var userData= data[0];
     console.log('USRE ROLE');
     this.navService.setUserNavigation();
     console.log('navigating...');
-    this.route.navigate(['./user/bookingHistory']);
+    this.route.navigate(['/user/bookingHistory']);
   }else if(this.user.role=="ADMIN"){
     this.navService.setAdminNavigation();
-    this.route.navigate(['./admin/manageAirlines']);
+    this.route.navigate(['/admin/manageAirlines']);
   }else{
     this.navService.setAdminNavigation();
   }

@@ -19,10 +19,11 @@ export class ManageDiscountsComponent implements OnInit {
   }
 
   addDiscount(){
-    this.discounts.push({});
+    this.discounts.push({id:'',code:'',discount:''});
   }
 
-  saveDiscount(flight:any){
-    this.service.updateFlight(flight);
+  saveDiscount(discount:any){
+    this.service.saveDiscount(discount);
+    this.ngOnInit();
   }
 }

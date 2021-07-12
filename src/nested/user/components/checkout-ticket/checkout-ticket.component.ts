@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FlightService } from 'src/app/services/flight.service';
+import { FlightService } from 'src/nested/services/flight.service';
 import { ShareableDataService } from 'src/app/services/shareable-data.service';
 
 @Component({
@@ -44,8 +44,12 @@ export class CheckoutTicketComponent implements OnInit {
   }
 
   applyDiscount(){
-    if(this.discount!='')
-      this.totalPrice=(this.totalPrice/100)*50;
+    if(this.discount!=''){
+      this.service.getDiscounts("?code="+this.discount).subscribe(data=>{
+        if(data[0]!=null&&data[0].discount!=0)
+      this.totalPrice = (this.totalPrice/100)*data[0].discount;
+      });
+    }
   }
 
   checkout(){
@@ -66,7 +70,7 @@ export class CheckoutTicketComponent implements OnInit {
 
     ticket.passengers = this.passengers;
     this.service.bookFlight(ticket);
-    this.route.navigate(['./bookingHistory']);
+    this.route.navigate(['./user/bookingHistory']);
   }
 
 }

@@ -30,9 +30,9 @@ export class NavigationService {
 
    setUserNavigation(){
     this.userItems=([{
-      label: 'Book Flight', routerLink:"/bookFlight"},
-      {label: 'Manage Bookings', routerLink:"/manageBooking"},
-       { label: 'Booking History', routerLink:"/bookingHistory"
+      label: 'Book Flight', routerLink:"bookFlight"},
+      {label: 'Manage Bookings', routerLink:"manageBooking"},
+       { label: 'Booking History', routerLink:"bookingHistory"
       }]);
   }
 

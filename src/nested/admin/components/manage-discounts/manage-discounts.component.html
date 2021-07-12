@@ -29,10 +29,10 @@
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-inputNumber [(ngModel)]="discount.discount" [min]="1" [max]="100" [showButtons]="true"></p-inputNumber>
+                            <p-inputNumber [(ngModel)]="discount.discount" suffix="%" [min]="1" [max]="100" [showButtons]="true"></p-inputNumber>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{discount.discount}}
+                            {{discount.discount}}%
                         </ng-template>
                     </p-cellEditor>
                     </td>

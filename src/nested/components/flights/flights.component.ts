@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FlightService } from 'src/nested/services/flight.service';
 
 @Component({
   selector: 'app-flights',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./flights.component.scss']
 })
 export class FlightsComponent implements OnInit {
-
-  constructor() { }
+  flights: any;
+  constructor(public service : FlightService) { }
 
   ngOnInit(): void {
+    this.service.getFlights('?').subscribe(data=>{
+      this.flights=data;
+      console.log(this.flights);
+    });
   }
 
 }

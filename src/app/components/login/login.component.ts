@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import {Message} from 'primeng//api';
 import {MessageService} from 'primeng/api';
 import { User } from 'src/app/models/user.model';
+import { ThisReceiver } from '@angular/compiler';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -62,20 +63,14 @@ var userData= data[0];
      this.navService.user=this.user;
   if(this.user.role=="USER"){
     console.log('USRE ROLE');
-    this.navService.setItems([{
-      label: 'Book Flight', routerLink:"./bookFlight"},
-      {label: 'Manage Bookings', routerLink:"./manageBooking"},
-       { label: 'Booking History', routerLink:"./bookingHistory"
-      },
-      { label: 'LogOut', routerLink:"./"
-    }]);
+    this.navService.setUserNavigation();
     console.log('navigating...');
-    this.route.navigate(['./bookingHistory']);
+    this.route.navigate(['/bookingHistory']);
   }else{
     this.navService.setItems([{
-      label: 'Manage Schedules', routerLink:"./bookFlight"},
-      {label: 'Manage Discounts', routerLink:"./manageBooking"},
-       { label: 'Manage Airlines', routerLink:"./bookingHistory"
+      label: 'Manage Schedules', routerLink:"/bookFlight"},
+      {label: 'Manage Discounts', routerLink:"/manageBooking"},
+       { label: 'Manage Airlines', routerLink:"/bookingHistory"
       },
       { label: 'Reports', routerLink:"./"},
       { label: 'LogOut', routerLink:"./"

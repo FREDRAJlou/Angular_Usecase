@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MenuModule} from 'primeng/menu';
 import {MenuItem} from 'primeng/api';
 import {MegaMenuItem} from 'primeng/api';
-import { NavigationService } from 'src/app/services/navigation.service';
+import { NavigationService } from 'src/nested/services/navigation.service';
 
 @Component({
   selector: 'user-navbar',

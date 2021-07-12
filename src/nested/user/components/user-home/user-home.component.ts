@@ -13,13 +13,7 @@ export class UserHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.navService.setItems([{
-      label: 'Book Flight', routerLink:"./user/bookFlight"},
-      {label: 'Manage Bookings', routerLink:"./user/manageBooking"},
-       { label: 'Booking History', routerLink:"./user/bookingHistory"
-      },
-      { label: 'LogOut', routerLink:"./"
-    }]);
+    this.navService.setUserNavigation();
   }
 
 }

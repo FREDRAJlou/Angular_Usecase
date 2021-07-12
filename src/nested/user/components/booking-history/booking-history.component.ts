@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShareableDataService } from 'src/app/services/shareable-data.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FlightService } from 'src/app/services/flight.service';
+import { FlightService } from 'src/nested/services/flight.service';
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 
@@ -16,14 +16,14 @@ export class BookingHistoryComponent implements OnInit {
  
 
     ngOnInit(): void {
-      this.flightService.getFlights("").subscribe((data) => {
+      this.flightService.getBookings("").subscribe((data) => {
         this.bookings=data;
       })   ; 
     }
 
   ticketDetail(ticket:any){
     this.service.sendData(ticket);
-    this.route.navigate(['./ticketDetails']);
+    this.route.navigate(['/user/ticketDetails']);
   }
 
 

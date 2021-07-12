@@ -40,7 +40,7 @@ updateFlight(flight:any){
 
 saveDiscount(discount:any){
   console.log('Saving...'+discount);
-  if(discount.id)
+  if(discount.id<1)
   this.http.post(this.serviceUrl+'discounts',discount).subscribe(data => {
     console.log(data);
 });
@@ -56,12 +56,16 @@ deleteFlight(flight:any){
 });
 }
 
-getDiscounts(query:string): Observable<Booking[]>{
-  return  this.http.get<Booking[]>(this.serviceUrl+'discounts'+query);
+getDiscounts(query:string): Observable<any>{
+  return  this.http.get(this.serviceUrl+'discounts'+query);
  }
 
 getFlights(query:string): Observable<Booking[]>{
   return  this.http.get<Booking[]>(this.serviceUrl+'flights'+query);
+ }
+
+ getBookings(query:string): Observable<Booking[]>{
+  return  this.http.get<Booking[]>(this.serviceUrl+'bookings'+query);
  }
   getFlight(name:string): Observable<Booking[]>{
     return  this.http.get<Booking[]>(this.serviceUrl+'flights?name='+name);
