@@ -32,6 +32,7 @@ import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -64,7 +65,9 @@ PasswordModule,
 MessagesModule,
 ToastModule,
 ConfirmDialogModule,
-CommonModule
+CommonModule,
+RouterModule,
+AdminRoutingModule
   ],
   providers: [MessageService,ConfirmationService],
 })

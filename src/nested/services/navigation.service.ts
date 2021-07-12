@@ -33,19 +33,16 @@ export class NavigationService {
       label: 'Book Flight', routerLink:"/bookFlight"},
       {label: 'Manage Bookings', routerLink:"/manageBooking"},
        { label: 'Booking History', routerLink:"/bookingHistory"
-      },
-      { label: 'LogOut', routerLink:"./"
-    }]);
+      }]);
   }
 
     setAdminNavigation(){
       this.userItems=[{
-        label: 'Manage Schedules', routerLink:"admin/manageSchedules"},
-        {label: 'Manage Discounts', routerLink:"admin/manageDiscounts"},
-         { label: 'Manage Airlines', routerLink:"admin/manageAirlines"
+        label: 'Manage Schedules', routerLink:"manageSchedules"},
+        {label: 'Manage Discounts', routerLink:"manageDiscounts"},
+         { label: 'Manage Airlines', routerLink:"manageAirlines"
         },
-        { label: 'Reports', routerLink:"./"},
-        { label: 'LogOut', routerLink:"./"
-      }];
+        { label: 'Reports', routerLink:"manageAirlines"}
+      ];
     }
 }

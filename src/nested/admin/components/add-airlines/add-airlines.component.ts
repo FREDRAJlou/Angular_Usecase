@@ -43,6 +43,9 @@ export class AddAirlinesComponent implements OnInit {
     }else if(this.flight.contactNumber==''){
       this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Conatct Number required"});
       return true;
+    }else if(this.flight.model==''){
+      this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Model required"});
+      return true;
     }
     return false;
   }

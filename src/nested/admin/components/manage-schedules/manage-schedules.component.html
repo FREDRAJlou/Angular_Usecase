@@ -1,5 +1,5 @@
 <p-card>                   
-    <p-table [value]="flights" [scrollable]="true"  scrollHeight="200px">
+    <p-table [value]="flights" [scrollable]="true"  scrollHeight="200px"  dataKey="flight.id">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
                 Available Flights
@@ -14,14 +14,12 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Logo</th>
-                <!-- <th>Flight</th> -->
-                <th>Price</th>
-                <th>Depature</th>
-              \ <th>Contact</th>
+               <th>Contact</th>
                 <th>Model</th> 
+                <th>Price</th>
                 <th>From</th>
                 <th>to</th>
-                <th>Schedule</th>
+                <th>Depature</th>
                 <th>Action</th>          
             </tr>
         </ng-template>
@@ -29,13 +27,48 @@
             <tr>
                 <td><img [src]="flight.logo" [alt]="flight.name" width="50" height="35" class="p-shadow-4" /></td>
                 <!-- <td>{{flight.name}}</td> -->
-                <td>{{flight.price}}</td> 
-                <td>{{flight.schedule}}</td>
                 <td>{{flight.contactNumber}}</td>  
                 <td>{{flight.model}}</td>  
-                <td>{{flight.from}}</td>  
-                <td>{{flight.to}}</td>  
-                <td>{{flight.schedule}}</td>  
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputNumber [(ngModel)]="flight.price"  currency="INR" locale="en-IN" mode="currency"  [min]="1" [max]="10000"></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{flight.price}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="flight.from">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{flight.from}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="flight.to">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{flight.to}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td> 
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="flight.schedule">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{flight.schedule}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td> 
                 <td> <p-button label="Save" (onClick)="saveFlight(flight)"></p-button></td>         
             </tr>
         </ng-template>

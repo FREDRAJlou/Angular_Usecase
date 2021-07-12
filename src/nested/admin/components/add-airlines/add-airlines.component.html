@@ -10,7 +10,7 @@
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Logo Url :</span>
-                    <p-password  [(ngModel)]="flight.logo" required [feedback]="false" [toggleMask]="true" placeholder="password" ></p-password>        
+                    <input type="text" pInputText [(ngModel)]="flight.logo" required placeholder="Logo Url">         
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Model :</span>
-                    <input type="text" pInputText [(ngModel)]="flight.model" required placeholder="UserName">         
+                    <input type="text" pInputText [(ngModel)]="flight.model" required placeholder="Model">         
                 </div>
             </div>
             </div>
@@ -36,7 +36,7 @@
         <div class="p-col-12 p-md-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">contact Address :</span>
-                <input type="text" pInputText [(ngModel)]="flight.contactAddress" required placeholder="UserName">         
+                <input type="text" pInputText [(ngModel)]="flight.contactAddress" required placeholder="Address">         
             </div>
         </div>
         </div>

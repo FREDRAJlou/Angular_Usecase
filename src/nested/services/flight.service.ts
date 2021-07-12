@@ -16,7 +16,6 @@ export class FlightService {
 
   bookFlight(ticket:any){
     console.log('Saving...'+ticket);
-    ticket.id ="20";
     this.http.post(this.serviceUrl+'bookings',ticket).subscribe(data => {
       console.log(data);
     
@@ -33,11 +32,33 @@ saveFlight(flight:any){
 
 updateFlight(flight:any){
   console.log('Saving...'+flight);
-  this.http.put(this.serviceUrl+'flights',flight).subscribe(data => {
+  this.http.put(this.serviceUrl+'flights/'+flight.id,flight).subscribe(data => {
     console.log(data);
   
 });
 }
+
+saveDiscount(discount:any){
+  console.log('Saving...'+discount);
+  if(discount.id)
+  this.http.post(this.serviceUrl+'discounts',discount).subscribe(data => {
+    console.log(data);
+});
+else{
+  this.http.put(this.serviceUrl+'discounts/'+discount.id,discount).subscribe(data => {
+    console.log(data);
+});}
+}
+
+deleteFlight(flight:any){
+  this.http.delete(this.serviceUrl+'flights/'+flight).subscribe(data => {
+    console.log(data);
+});
+}
+
+getDiscounts(query:string): Observable<Booking[]>{
+  return  this.http.get<Booking[]>(this.serviceUrl+'discounts'+query);
+ }
 
 getFlights(query:string): Observable<Booking[]>{
   return  this.http.get<Booking[]>(this.serviceUrl+'flights'+query);
