@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { FlightService } from 'src/nested/services/flight.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { FlightService } from 'src/nested/services/flight.service';
 })
 export class ManageSchedulesComponent implements OnInit {
   flights:any=[];
-  constructor(private route : Router,public service : FlightService) { }
+  constructor(private msgService: MessageService,private route : Router,public service : FlightService) { }
 
   ngOnInit(): void {
     this.service.getFlights('?').subscribe(data=>{
@@ -20,6 +21,7 @@ export class ManageSchedulesComponent implements OnInit {
 
   saveFlight(flight:any){
     this.service.updateFlight(flight);
+    this.msgService.add({severity:'success', summary:'Airline Updated', detail:""});
   }
 
 }

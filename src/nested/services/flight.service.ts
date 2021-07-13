@@ -73,8 +73,6 @@ getFlights(query:string): Observable<Booking[]>{
 
   cancelTicket(id:any){
     console.log(id);
-    this.http.delete(this.serviceUrl+'bookings/'+id).subscribe(data=>{
-      console.log(data);
-    });
+   return this.http.delete(this.serviceUrl+'bookings/'+id)
   }
 }

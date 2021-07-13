@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.navService.user;
   }
 
   searchFlight(){

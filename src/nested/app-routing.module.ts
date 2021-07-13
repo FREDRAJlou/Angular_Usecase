@@ -12,6 +12,7 @@ import {LoginComponent } from './components/login/login.component';
 // import { ManageBookingComponent } from './user/components/manage-bookings/manage-bookings.component';
 import { UserComponent } from './user/user.component';
 import { UserHomeComponent } from './user/components/user-home/user-home.component';
+import { AuthenticationGuardService } from './services/authentication-guard.service';
 
 
 const routes: Routes = [
@@ -25,14 +26,14 @@ const routes: Routes = [
     { path: 'flights', component: FlightsComponent},
     { path: 'logout', component: HomeComponent},
     { path: 'login', component: LoginComponent},     
-    { path: 'user',  loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
-    { path: 'admin',  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+    { path: 'user',  loadChildren: () => import('./user/user.module').then(m => m.UserModule) ,canActivateChild:[AuthenticationGuardService]},
+    { path: 'admin',  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),canActivateChild:[AuthenticationGuardService] },
       // {path:'',component:HomeComponent,children:[
       //   { path: 'user',  loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
       //   { path: 'admin',  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },]},
   //  
   
-    //  {path:'**', redirectTo:'home' }
+     {path:'**', redirectTo:'home' }
 ];
 
 @NgModule({

@@ -4,6 +4,12 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FlightService } from 'src/nested/services/flight.service';
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import autoTable from "jspdf-autotable"
+import { formatDate } from '@angular/common';
+import {Inject,LOCALE_ID } from '@angular/core';
+
 @Component({
   selector: 'app-manage-bookings',
   templateUrl: './manage-bookings.component.html',
@@ -13,20 +19,58 @@ export class ManageBookingComponent implements OnInit {
     bookings : any;
     cuurentDate = new Date();
     deleteTicket:any;
+    // exportColumns:any[]=[];
+    cols:any[]=[];
  
-  constructor(private msgService: MessageService,private confirmationService: ConfirmationService,private service : ShareableDataService,private route : Router,private flightService : FlightService) { }
+  constructor( @Inject(LOCALE_ID) public locale: string,private msgService: MessageService,private confirmationService: ConfirmationService,private service : ShareableDataService,private route : Router,private flightService : FlightService) { }
  
 
   ngOnInit(): void {
     this.flightService.getBookings("").subscribe((data) => {
       this.bookings=data;
     })   ; 
+    this.cols  = [
+      { title: "From", dataKey: "from" },
+      { title: "Flight", dataKey: "flight" },
+      { title: "Date", dataKey: "onwardDate" },
+      { title: "To", dataKey: "to" },
+      { title: "Return", dataKey: "returnFlight" },
+      { title: "Date", dataKey: "returnDate" },
+      { title: "Price", dataKey: "price" },
+      { title: "Booking Date", dataKey: "date" },
+      { title: "Passengers", dataKey: "passenger" }
+    ];
+
+  // this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
  }
 
  ticketDetail(ticket:any){
    this.service.sendData(ticket);
    this.route.navigate(['/user/ticketDetails']);
  }
+
+ exportPdf(ticket:any) {
+  let tickets:any[]=[];
+  console.log(ticket);
+  ticket.passenger="";
+  for(let i = 0; i < ticket.passengers.length;i++){
+      ticket.passenger+=ticket.passengers[i].name;
+  }
+ ticket.onwardDate=formatDate(ticket.onwardDate, 'dd-MM-yyyy' ,this.locale);
+ ticket.returnDate=formatDate(ticket.returnDate, 'dd-MM-yyyy' ,this.locale);
+ ticket.date=formatDate(ticket.date, 'dd-MM-yyyy' ,this.locale);
+  tickets.push(ticket);
+        const doc = new jsPDF('p','pt');
+       
+        autoTable(doc, {
+          columns: this.cols,
+          body: tickets});
+         
+        doc.save('Ticket-'+ticket.date+'.pdf');
+      }
+     
+
+
 
 
  cancelTicket(ticket:any) {
@@ -36,9 +80,11 @@ export class ManageBookingComponent implements OnInit {
          icon: 'pi pi-exclamation-triangle',
          accept: () => {
           console.log('deleting '+ticket.id);
-          this.flightService.cancelTicket(ticket.id);
+         this.flightService.cancelTicket(ticket.id).subscribe(data=>{
+          console.log(data);
+        });
+        this.ngOnInit();
           this.msgService.add({severity:'success', summary:'Booking Cancelled', detail:""});
-          this.ngOnInit();
          }
      });
  }

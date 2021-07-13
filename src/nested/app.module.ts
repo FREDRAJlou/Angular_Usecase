@@ -38,6 +38,7 @@ import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import { AuthenticationGuardService } from './services/authentication-guard.service';
 
 @NgModule({
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -79,7 +80,7 @@ MessagesModule,
 ToastModule,
 ConfirmDialogModule,
   ],
-  providers: [MessageService,ConfirmationService],
+  providers: [MessageService,ConfirmationService,AuthenticationGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

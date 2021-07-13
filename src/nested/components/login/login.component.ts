@@ -67,6 +67,7 @@ var userData= data[0];
       return;
      }
      this.user=userData;
+     console.log("setting user in nav"+JSON.stringify(userData)+" original"+JSON.stringify(data));
      this.navService.user=this.user;
   if(this.user.role=="USER"){
     console.log('USRE ROLE');

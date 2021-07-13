@@ -16,6 +16,7 @@ export class AddAirlinesComponent implements OnInit {
 
   constructor(private msgService: MessageService, private navService: NavigationService, private flightService: FlightService, private route : Router) 
   { 
+    this.flight={name:'',logo:'',model:'',contactNumber:'',contactAddress:''}
  }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class AddAirlinesComponent implements OnInit {
   addAirline(){
     if(this.validateFlight())
     return;
+    else{
     this.flightService.getFlight(this.flight.name).subscribe((data)=>{
       if(data[0]!=null){
         this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Airline already Exists"});
@@ -34,16 +36,18 @@ export class AddAirlinesComponent implements OnInit {
    
   });
 }
+}
 
   validateFlight():boolean{
-    if(this.flight.name==''){
+    console.log(this.flight);
+    if(this.flight?.name===""){
       console.log('throeing');
       this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Airline Name required"});
       return true;
-    }else if(this.flight.contactNumber==''){
+    }else if(this.flight?.contactNumber===""){
       this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Conatct Number required"});
       return true;
-    }else if(this.flight.model==''){
+    }else if(this.flight?.model===""){
       this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Model required"});
       return true;
     }

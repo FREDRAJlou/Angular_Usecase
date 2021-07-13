@@ -1,22 +1,25 @@
 
-<p-toast></p-toast>
+<p-toast position="top-right"></p-toast>
 <p-panel header="Book Flight" >
-    <p-radioButton name="TravelType" value="One Way" label="One Way" [(ngModel)]="ticket.type"></p-radioButton>
+    <div >
+    <p-radioButton name="TravelType" [ngStyle]="{'margin-left': '15px','margin-bottom': '15px'}" value="One Way" label="One Way" [(ngModel)]="ticket.type"></p-radioButton>
     <span style="width:20px"></span>
-    <p-radioButton name="TravelType" value="Round Trip" label="Round Trip" [(ngModel)]="ticket.type"></p-radioButton>
-
+    <p-radioButton name="TravelType" [ngStyle]="{'margin-left': '60px','margin-bottom': '15px'}" value="Round Trip" label="Round Trip" [(ngModel)]="ticket.type"></p-radioButton>
+</div>
 <div class="p-grid p-fluid">
     <div class="p-col-12 p-md-4">
         <div class="p-inputgroup">
             <span class="p-inputgroup-addon">From :</span>
-            <input type="text" (onchange)="populateFlights()" pInputText [(ngModel)]="ticket.from" placeholder="From">         
+            <p-dropdown [options]="fromLoc" [(ngModel)]="ticket.from" (onChange)="populateTo()" placeholder="From"  optionLabel="name" optionValue="name"></p-dropdown>
+            <!-- <input type="text" (onchange)="populateFlights()" pInputText [(ngModel)]="ticket.from" placeholder="From">          -->
         </div>
     </div>
     
     <div class="p-col-12 p-md-4">
         <div class="p-inputgroup">
             <span class="p-inputgroup-addon">To:</span>
-            <input type="text" (onchange)="populateFlights()" pInputText [(ngModel)]="ticket.to" placeholder="To">    
+            <p-dropdown [options]="toLoc" [(ngModel)]="ticket.to" (onChange)="populateFrom()" placeholder="To" optionValue="name"  optionLabel="name"></p-dropdown>
+            <!-- <input type="text" (onchange)="populateFlights()" pInputText [(ngModel)]="ticket.to" placeholder="To">     -->
         </div>
     </div>
     
@@ -33,11 +36,11 @@
                         <div>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">Date :</span>
-                        <p-calendar [(ngModel)]="ticket.date" dateFormat="dd/mm/yy" [showButtonBar]="true"
-                        [minDate]="minDate" [readonlyInput]="true" [showTime]="true" hourFormat="24"></p-calendar>
+                        <p-calendar [(ngModel)]="ticket.onwardDate" dateFormat="dd/mm/yy" [showButtonBar]="true"
+                        [minDate]="minDate" [readonlyInput]="true" hourFormat="24"></p-calendar>
                     </div> 
                     
-                    <p-table [value]="flight" [scrollable]="true"  scrollHeight="200px"
+                    <p-table [value]="flights" [scrollable]="true"  scrollHeight="200px"
                     selectionMode="single" [(selection)]="service.selectedFlight" dataKey="id"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                         <ng-template pTemplate="caption">
@@ -89,11 +92,11 @@
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">Date :</span>
                         <p-calendar [(ngModel)]="ticket.returnDate" dateFormat="dd/mm/yy" [showButtonBar]="true"
-                        [minDate]="minDate" [readonlyInput]="true" [showTime]="true" hourFormat="24"></p-calendar>
+                        [minDate]="minDate" [readonlyInput]="true" hourFormat="24"></p-calendar>
                     </div> 
                     </div>
                     </div>
-                    <p-table   [value]="returnFlight" [scrollable]="true"  scrollHeight="200px"
+                    <p-table   [value]="returnFlights" [scrollable]="true"  scrollHeight="200px"
                     selectionMode="single" [(selection)]="service.selectedReturnFlight" dataKey="id"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                         <ng-template pTemplate="caption">

@@ -23,19 +23,23 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>Date</th>
-            <th>Flight</th>
-            <th>Logo</th>
+            <th>Booking Date</th>
             <th>Price</th>
-            <th>Price</th>          
+            <th>Type</th>
+            <th>From</th>
+            <th>To</th>
+            <th>View</th>          
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-book>
         <tr>
-            <td>{{book.date}}</td>
-            <td>{{book.flight}}</td>
-            <td><img [src]="book.image" [alt]="book.id" width="100" height="75" class="p-shadow-4" /></td>
+            <td>{{book.date | date : 'short'}}</td>
+            <!-- <td>{{book.flight}}</td>
+            <td><img [src]="book.logo" [alt]="book.id" width="100" height="75" class="p-shadow-4" /></td> -->
             <td>{{book.price}}</td> 
+            <td>{{book.type}}</td> 
+            <td>{{book.from}}</td> 
+            <td>{{book.to}}</td> 
             <td><p-button  (onClick)="ticketDetail(book)" label="View Details"></p-button></td>         
         </tr>
     </ng-template>

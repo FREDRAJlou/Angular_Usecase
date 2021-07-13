@@ -17,7 +17,7 @@ export class NavigationService {
        { label: 'Flights', routerLink:"./flights"
       },
      ]
-     if(this.user.valid){
+     if(this.user.role){
        this.items.push( { label: 'LogOut', routerLink:"./home"
       });
      }else{

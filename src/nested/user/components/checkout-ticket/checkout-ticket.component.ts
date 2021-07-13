@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlightService } from 'src/nested/services/flight.service';
 import { ShareableDataService } from 'src/app/services/shareable-data.service';
+import { NavigationService } from 'src/nested/services/navigation.service';
+import { MsgService } from 'src/nested/services/msg.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-checkout-ticket',
@@ -15,7 +18,7 @@ export class CheckoutTicketComponent implements OnInit {
   passengers : Array<any>=[{}];
   ticket :any={};
   meals =[{name:'Veg'},{name:'Non-Veg'},{name:'None'}];
-  constructor(private service : FlightService, private route : Router, private shared : ShareableDataService) { 
+  constructor(private msg : MessageService,private msgService : MsgService,private navService : NavigationService,private service : FlightService, private route : Router, private shared : ShareableDataService) { 
    
   }
 
@@ -25,7 +28,7 @@ export class CheckoutTicketComponent implements OnInit {
     this.passengers=[{id:1,name:'',age:'',meal:'None',phone:''}];
     this.shared.msg.subscribe(data => {
       this.ticket = data;
-      console.log("From  details obs"+data);
+      console.log("This Ticket ="+data);
       console.log("From  details obs"+JSON.stringify(this.ticket));
     });
     this.totalPrice=this.ticket.price;
@@ -45,18 +48,23 @@ export class CheckoutTicketComponent implements OnInit {
 
   applyDiscount(){
     if(this.discount!=''){
-      this.service.getDiscounts("?code="+this.discount).subscribe(data=>{
+      this.service.getDiscounts("?code='"+this.discount.toUpperCase+"'").subscribe(data=>{
+        console.log("?code='"+this.discount+"'"+data);
         if(data[0]!=null&&data[0].discount!=0)
-      this.totalPrice = (this.totalPrice/100)*data[0].discount;
+      this.totalPrice = (this.totalPrice/100)*(100-data[0].discount);
       });
     }
+    this.msg.add({severity:'info', summary:"Discount Applied ", detail:""});
+    this.msgService.infoMsg("Discount Applied");
   }
 
   checkout(){
-   var ticket={id:'',flight:'',image:'',price:0,from:'',to:'',date:'',type:'',passengers:[{}]};
-    ticket.flight = this.ticket.name;
-    ticket.image = this.ticket.logo;
-    ticket.date = this.ticket.depature;
+   var ticket  ={type:'',logo:'',booker:'',price:0,onwardDate:'',returnDate:'',flight:'',returnFlight:'',from:'',to:'',date:new Date(),id:'',passengers:[{}]}
+    ticket.flight = this.ticket.flight;
+    ticket.returnFlight = this.ticket.returnFlight;
+    ticket.logo = this.ticket.logo;
+    ticket.onwardDate = this.ticket.onwardDate;
+    ticket.returnDate = this.ticket.returnDate;
     ticket.from = this.ticket.from;
     ticket.to = this.ticket.to;
     ticket.price = this.totalPrice;
@@ -69,7 +77,15 @@ export class CheckoutTicketComponent implements OnInit {
     // }
 
     ticket.passengers = this.passengers;
+   ticket.date = new Date();
+    ticket.price = this.totalPrice;
+    ticket.booker = this.navService.user.name;
+    console.log(ticket);
+   var ans =  prompt('Y/N');
+   if(ans=='Y')
     this.service.bookFlight(ticket);
+     this.msg.add({severity:'info', summary:"Ticket Booked ", detail:""});
+    this.msgService.infoMsg("Ticket Booked ");
     this.route.navigate(['./user/bookingHistory']);
   }
 

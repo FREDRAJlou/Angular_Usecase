@@ -35,7 +35,10 @@ export class ManageAirlinesComponent implements OnInit {
          console.log('deleting '+flight.id);
          this.service.deleteFlight(flight.id);
          this.msgService.add({severity:'success', summary:'Airline Deleted', detail:""});
-         this.ngOnInit();
+         this.service.getFlights('?').subscribe(data=>{
+          this.flights=data;
+          console.log(this.flights);
+        });
         }
     });
   }

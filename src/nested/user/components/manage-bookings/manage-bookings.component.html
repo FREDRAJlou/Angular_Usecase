@@ -1,6 +1,5 @@
-
+<p-toast position="top-right"></p-toast>
 <div class="card">
-    <p-toast position="top-right"></p-toast>
     <!-- <hr>
     <ol>
     <li *ngFor="let booking of bookings">
@@ -11,37 +10,45 @@
     
     </li>
     </ol> -->
-    <p-table [value]="bookings" [scrollable]="true"  scrollHeight="300px">
+    <p-table #dt [columns]="cols" [value]="bookings" [scrollable]="true"  scrollHeight="300px">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
                 Available Bookings
             </div>
-            <!-- <div class="p-d-flex">
-                <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
-            </div> -->
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <!-- <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
+                    <!-- <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf(ticket)" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
+                    <!-- <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button> -->
+                </div>
+            </ng-template>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>Logo</th>
-                <th>Flight</th>
-                <th>Price</th>
+                <!-- <th>Flight</th>
                 <th>Date</th>
-                <th></th>
-                <th></th>
-                <th></th>          
+                <th>Return Flight</th>
+                <th>Return Date</th> -->
+                <th>Type</th>
+                <th>Price</th>
+                <th>Booking Date</th>
+                <th>View</th>
+                <th>Export</th>
+                <th>Cancel</th>          
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-book>
             <tr>
-                <td><img [src]="book.image" [alt]="book.id" width="100" height="75" class="p-shadow-4" /></td>
-                <td>{{book.flight}}</td>
+                <!-- <td>{{book.flight}}</td>
+                <td>{{book.onwardDate|date:'short'}}</td>
+                <td>{{book.returnFlight}}</td>
+                <td>{{book.returnDate|date:'short'}}</td> -->
+                <td>{{book.type}}</td>
                 <td>{{book.price}}</td> 
                 <td>{{book.date|date:'short'}}</td>
                 <td><p-button  (onClick)="ticketDetail(book)" label="View"></p-button></td>  
-                <td><p-button   label="Download"></p-button></td>  
+                <td><button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf(book)" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button></td>
                 <td><p-button *ngIf="!book.cancelFlag" (onClick)="cancelTicket(book)" label="Cancel"></p-button></td>         
             </tr>
         </ng-template>

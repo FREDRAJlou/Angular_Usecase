@@ -10,10 +10,13 @@ import { ShareableDataService } from 'src/app/services/shareable-data.service';
 })
 export class BookFlightComponent implements OnInit {
 
-  ticket : any ={type:'',flight:'',from:'',to:'',date:'',id:'',price:'',returnDate:''}
-  flight:any = [];
-  returnFlight:any = [];
+  ticket : any ={type:'',onwardDate:'',returnDate:'',flight:'',returnFlight:'',from:'',to:'',date:'',id:'',price:''}
+  flights:any = [];
+  returnFlights:any = [];
   minDate: Date = new Date();
+  Locs =[{name:'Chennai',disabled:false},{name:'Bangalore',disabled:false},{name:'Kolkata',disabled:false},{name:'Pune',disabled:false},{name:'Mumbai',disabled:false}];
+  fromLoc:any=[];
+  toLoc:any=[];
   constructor(public service : FlightService,private route : Router,private shared : ShareableDataService) { 
     console.log("bbok Flight");
   }
@@ -22,30 +25,55 @@ export class BookFlightComponent implements OnInit {
   ngOnInit(): void {
     this.ticket.minDate = new Date();
     this.ticket.type='One Way';
-    this.flight=[];
-    this.returnFlight=[];
+    this.flights=[];
+    this.returnFlights=[];
+    this.fromLoc=this.Locs;
+    this.toLoc=this.Locs;
+  }
+
+  populateTo(){
+    for(let i=0;i<this.toLoc.length;i++){
+      if(this.toLoc[i]?.name==this.ticket.from)
+      this.toLoc[i].disabled=true;
+    }
+    console.log('this.toLoc ='+this.toLoc);
+  }
+
+  populateFrom(){
+    for(let i=0;i<this.fromLoc.length;i++){
+      if(this.fromLoc[i]?.name==this.ticket.to)
+      this.fromLoc[i].disabled=true;
+    }
   }
 
   populateFlights(){
     console.log("inside populate flights");
-    this.service.getFlights('?').subscribe(data=>{
-      this.flight=data;
-      this.returnFlight=data;
-      console.log(this.flight);
+    this.service.getFlights('?from='+this.ticket.from+'&to='+this.ticket.to).subscribe(data=>{
+      this.flights=data;
+      console.log(this.flights);
+    });
+    this.service.getFlights('?to='+this.ticket.from+'&from='+this.ticket.to).subscribe(data=>{
+      this.returnFlights=data;
+      console.log(this.flights);
     });
   }
+
 
   onRowSelect(event:any){
     console.log(event.data);
     console.log(this.service.selectedFlight);
+    this.ticket.flight=this.service.selectedFlight.name;
+    this.ticket.returnFlight=this.service.selectedReturnFlight.name;
   }
   onRowUnselect(event:any){
     console.log(event.data);
     console.log(this.service.selectedFlight);
+    this.ticket.returnFlight=this.service.selectedReturnFlight.name;
+    this.ticket.flight=this.service.selectedFlight.name;
   }
 
   continueBooking(){
-    this.ticket.price = this.service.selectedFlight.price;
+    this.ticket.price = this.service.selectedFlight.price+ this.service.selectedReturnFlight?.price;
     this.shared.sendData(this.ticket);
     this.route.navigate(['./user/checkoutTicket']);
   }
