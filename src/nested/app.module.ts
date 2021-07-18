@@ -43,6 +43,8 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import { AuthenticationGuardService } from './services/authentication-guard.service';
 import {ChartModule} from 'primeng/chart';
 import { ErrorComponent } from './components/error/error.component';
+import { UserModule } from './user/user.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -86,7 +88,7 @@ MessageModule,
 PasswordModule,
 MessagesModule,
 ToastModule,
-ConfirmDialogModule,
+ConfirmDialogModule
   ],
   providers: [MessageService,ConfirmationService,AuthenticationGuardService],
   bootstrap: [AppComponent]

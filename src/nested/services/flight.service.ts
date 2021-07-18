@@ -60,8 +60,8 @@ deleteAirline(id:any){
 }
 
 //Flights
-getFlights(query:string): Observable<Booking[]>{
-  return  this.http.get<Booking[]>(this.url+query);
+getFlights(query:string): Observable<any>{
+  return  this.http.get<any>(this.url+query);
  }
 
  getFlightsFromBooking(query:string): Observable<Booking[]>{
@@ -78,9 +78,14 @@ deleteFlight(flight:any){
     return  this.http.get<Booking[]>(this.url+'getFlightByName/'+name);
    }
 
-   getFlightByLoc(name:string): Observable<Booking[]>{
+   getFlightByLoc(name:string): Observable<any>{
     console.log("Params in get flight "+ name);
-    return  this.http.get<Booking[]>(this.url+'getFlightByLoc/'+name);
+    return  this.http.get<any>(this.url+'getFlightByLoc/'+name);
+   }
+
+   getFlightLocs(query:string): Observable<any>{
+    console.log("Params in get flight "+ query);
+    return  this.http.get<any>(this.url+'getFlightLocs/'+query);
    }
 
    saveFlight(flight:any){

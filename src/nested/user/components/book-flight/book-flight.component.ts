@@ -15,7 +15,7 @@ export class BookFlightComponent implements OnInit {
   flights:any = [];
   returnFlights:any = [];
   minDate: Date = new Date();
-  Locs =[{name:'Chennai',disabled:false},{name:'Bangalore',disabled:false},{name:'Kolkata',disabled:false},{name:'Pune',disabled:false},{name:'Mumbai',disabled:false}];
+  // Locs =[{name:'Chennai',disabled:false},{name:'Bangalore',disabled:false},{name:'Kolkata',disabled:false},{name:'Pune',disabled:false},{name:'Mumbai',disabled:false}];
   fromLoc:any=[];
   toLoc:any=[];
   constructor(public service : FlightService,private route : Router,private shared : ShareableDataService,private msgService: MessageService) { 
@@ -28,27 +28,32 @@ export class BookFlightComponent implements OnInit {
     this.ticket.type='One Way';
     this.flights=[];
     this.returnFlights=[];
-    this.fromLoc=this.Locs;
-    this.toLoc=this.Locs;
+   console.log(" book flight init ");
+   this.populateFrom();
+   this.populateTo();
   }
 
   populateTo(){
-    for(let i=0;i<this.toLoc.length;i++){
-      if(this.toLoc[i]?.name==this.ticket.from)
-      this.toLoc[i].disabled=true;
-      else
-      this.toLoc[i].disabled=false;
-    }
-    console.log('this.toLoc ='+this.toLoc);
+    let locs :any=[];
+    this.toLoc=[];
+    this.service.getFlightLocs("from,"+(this.ticket.from?this.ticket.from:"@")).subscribe(data=>{
+      locs=data;
+    console.log("locs "+locs);
+    locs.forEach((data: any) =>{
+    this.toLoc.push({name:data,disabled:false});
+    });
+  });
   }
 
   populateFrom(){
-    for(let i=0;i<this.fromLoc.length;i++){
-      if(this.fromLoc[i]?.name==this.ticket.to)
-      this.fromLoc[i].disabled=true;
-      else
-      this.fromLoc[i].disabled=false;
-    }
+    let loc1 :any=[];
+    this.fromLoc=[];
+    this.service.getFlightLocs("to,"+(this.ticket.to?this.ticket.to:"@")).subscribe(data=>
+      {loc1=data;
+    console.log("loc1 "+loc1);
+    loc1.forEach((data: any)=>{
+    this.fromLoc.push({name:data,disabled:false});
+    });});
   }
 
   populateFlights(){
