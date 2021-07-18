@@ -11,12 +11,12 @@ import { NavigationService } from 'src/nested/services/navigation.service';
 })
 export class AddAirlinesComponent implements OnInit {
 
-  flight:any={};
+  airline:any={};
   msgs: Message[]=[];
 
   constructor(private msgService: MessageService, private navService: NavigationService, private flightService: FlightService, private route : Router) 
   { 
-    this.flight={name:'',logo:'',model:'',contactNumber:'',contactAddress:''}
+    this.airline={name:'',logo:'',contactNumber:'',contactAddress:''}
  }
 
   ngOnInit(): void {
@@ -26,12 +26,13 @@ export class AddAirlinesComponent implements OnInit {
     if(this.validateFlight())
     return;
     else{
-    this.flightService.getFlight(this.flight.name).subscribe((data)=>{
+    this.flightService.getAirlines('getAirlineByName/'+this.airline.name).subscribe((data)=>{
       if(data[0]!=null){
         this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Airline already Exists"});
       }else{
-        this.flightService.saveFlight(this.flight);
-        this.route.navigate(['./admin/manageSchedules']);
+      console.log("Saving Airline...")
+        this.flightService.saveAirline(this.airline);
+        this.route.navigate(['./admin/manageAirlines']);
       }
    
   });
@@ -39,15 +40,15 @@ export class AddAirlinesComponent implements OnInit {
 }
 
   validateFlight():boolean{
-    console.log(this.flight);
-    if(this.flight?.name===""){
+    console.log(this.airline);
+    if(this.airline?.name===""){
       console.log('throeing');
       this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Airline Name required"});
       return true;
-    }else if(this.flight?.contactNumber===""){
+    }else if(this.airline?.contactNumber===""){
       this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Conatct Number required"});
       return true;
-    }else if(this.flight?.model===""){
+    }else if(this.airline?.model===""){
       this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Model required"});
       return true;
     }

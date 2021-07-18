@@ -12,11 +12,20 @@ import {MessageService} from 'primeng/api';
 })
 export class BookingHistoryComponent implements OnInit {
     bookings : any;
-    constructor(private msgService: MessageService,private confirmationService: ConfirmationService,private service : ShareableDataService,private route : Router,private flightService : FlightService) { }
+    pnr:string;
+    constructor(private msgService: MessageService,private confirmationService: ConfirmationService,private service : ShareableDataService,private route : Router,private flightService : FlightService) { 
+      this.pnr="";
+    }
  
 
     ngOnInit(): void {
       this.flightService.getBookings("").subscribe((data) => {
+        this.bookings=data;
+      })   ; 
+    }
+
+    populateBookings(){
+      this.flightService.getBookings(this.pnr!=''?"?pnr="+this.pnr:"").subscribe((data) => {
         this.bookings=data;
       })   ; 
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
-import { NavigationService } from 'src/app/services/navigation.service';
+import { NavigationService } from 'src/nested/services/navigation.service';
 
 
 @Component({
@@ -37,10 +37,27 @@ export class HomeComponent implements OnInit {
   }
 
   manageBookings(){
-    this.navService.setItems([]);
     if(this.user.name!=''){
       console.log(this.user.name);
       this.route.navigate(['./user/manageBooking']);
+    }else{
+      this.route.navigate(['./login']);
+    }
+  }
+
+  manageAirlines(){
+    if(this.user.name!=''){
+      console.log(this.user.name);
+      this.route.navigate(['./admin/manageAirlines']);
+    }else{
+      this.route.navigate(['./login']);
+    }
+  }
+
+ addAirlines(){
+    if(this.user.name!=''){
+      console.log(this.user.name);
+      this.route.navigate(['./admin/addAirlines']);
     }else{
       this.route.navigate(['./login']);
     }

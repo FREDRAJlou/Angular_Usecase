@@ -38,7 +38,10 @@ import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {ProgressBarModule} from 'primeng/progressbar';
 import { AuthenticationGuardService } from './services/authentication-guard.service';
+import {ChartModule} from 'primeng/chart';
 
 @NgModule({
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -63,6 +66,9 @@ import { AuthenticationGuardService } from './services/authentication-guard.serv
     FormsModule,
     AppRoutingModule,
     TableModule,
+    ChartModule,
+    ProgressSpinnerModule,
+    ProgressBarModule,
     MenubarModule,
     ButtonModule,
     SplitterModule,

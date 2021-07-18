@@ -7,10 +7,11 @@ import { Booking } from '../models/booking';
   providedIn: 'root'
 })
 export class FlightService {
-
+  airline:any={};
   selectedFlight: any={};
   selectedReturnFlight: any={};
   serviceUrl='http://localhost:3000/';
+  url='http://localhost:9092/airlines/airlines/';
 
   constructor( private http : HttpClient ) { }
 
@@ -24,15 +25,14 @@ export class FlightService {
 
 saveFlight(flight:any){
   console.log('Saving...'+flight);
-  this.http.post(this.serviceUrl+'flights',flight).subscribe(data => {
+  this.http.post(this.url+'saveFlight',flight).subscribe(data => {
     console.log(data);
-  
 });
 }
 
 updateFlight(flight:any){
-  console.log('Saving...'+flight);
-  this.http.put(this.serviceUrl+'flights/'+flight.id,flight).subscribe(data => {
+  console.log('Updating...'+flight);
+  this.http.put(this.url+'updateFlight',flight).subscribe(data => {
     console.log(data);
   
 });
@@ -51,7 +51,7 @@ else{
 }
 
 deleteFlight(flight:any){
-  this.http.delete(this.serviceUrl+'flights/'+flight).subscribe(data => {
+  this.http.delete(this.url+'deleteFlight/'+flight).subscribe(data => {
     console.log(data);
 });
 }
@@ -61,14 +61,36 @@ getDiscounts(query:string): Observable<any>{
  }
 
 getFlights(query:string): Observable<Booking[]>{
-  return  this.http.get<Booking[]>(this.serviceUrl+'flights'+query);
+  return  this.http.get<Booking[]>(this.url+query);
  }
+
+ getAirlines(query:string): Observable<any[]>{
+  return  this.http.get<any[]>(this.url+query);
+ }
+
+ saveAirline(airline:any){
+  airline.active=true;
+  console.log('Saving...'+airline);
+  // if(airline.id<1)
+  this.http.post(this.url+'saveAirline',airline).subscribe(data => {
+    console.log(data);
+});
+// else{
+//   this.http.put(this.serviceUrl+'airlines/saveAirline'+airline.id,airline).subscribe(data => {
+//     console.log(data);
+// });}
+}
+
+deleteAirline(id:any){
+  this.http.delete(this.url+'deleteAirline/'+id).subscribe();
+}
 
  getBookings(query:string): Observable<Booking[]>{
   return  this.http.get<Booking[]>(this.serviceUrl+'bookings'+query);
  }
   getFlight(name:string): Observable<Booking[]>{
-    return  this.http.get<Booking[]>(this.serviceUrl+'flights?name='+name);
+    console.log("Params in get flight "+ name);
+    return  this.http.get<Booking[]>(this.url+'getFlightByName/'+name);
    }
 
   cancelTicket(id:any){

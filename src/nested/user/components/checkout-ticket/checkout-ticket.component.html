@@ -49,7 +49,7 @@
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-inputNumber [(ngModel)]="pass.phone" [useGrouping]="false" [min]="1000000000" [max]="9999999999"></p-inputNumber>
+                            <p-inputNumber [(ngModel)]="pass.phone" [useGrouping]="false" [min]="0" [max]="9999999999"></p-inputNumber>
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{pass.phone}}

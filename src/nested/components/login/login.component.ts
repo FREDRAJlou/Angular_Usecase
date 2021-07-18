@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationService } from 'src/nested/services/navigation.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/nested/services/user.service';
 import {Message} from 'primeng//api';
 import {MessageService} from 'primeng/api';
 import { User } from 'src/app/models/user.model';
+import { AuthenticationGuardService } from 'src/nested/services/authentication-guard.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,12 +29,13 @@ msgs: Message[]=[];
     if(this.validateUser())
     return;
     this.userService.getUser(this.user.name).subscribe((data)=>{
-      if(data[0]!=null){
+      console.log(data);
+      if(data!=null&&data.name==this.user.name){
         this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Username already Exists"});
       }else{
         this.user.role="USER";
         this.userService.saveUser(this.user);
-        this.route.navigate(['./user/bookingHistory']);
+        this.route.navigate(['./home']);
       }
    
   });
@@ -55,10 +58,10 @@ msgs: Message[]=[];
   login(){
     if(this.validateUser())
     return;
-  console.log('getting user data fro'+this.user.name);
+    this.navService.user=this.user;
 this.userService.getUser(this.user.name).subscribe((data)=>{
-console.log(data[0]);
-var userData= data[0];
+console.log(data);
+var userData= data;
    if(userData!=null){
     console.log('User not null');
      if(userData.password!=this.user.password){
@@ -67,16 +70,14 @@ var userData= data[0];
       return;
      }
      this.user=userData;
-     console.log("setting user in nav"+JSON.stringify(userData)+" original"+JSON.stringify(data));
-     this.navService.user=this.user;
   if(this.user.role=="USER"){
     console.log('USRE ROLE');
     this.navService.setUserNavigation();
     console.log('navigating...');
-    this.route.navigate(['/user/bookingHistory']);
+    this.route.navigate(['./home']);
   }else if(this.user.role=="ADMIN"){
     this.navService.setAdminNavigation();
-    this.route.navigate(['/admin/manageAirlines']);
+    this.route.navigate(['./home']);
   }else{
     this.navService.setAdminNavigation();
   }
@@ -85,5 +86,7 @@ var userData= data[0];
     this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Invalid Username/password"});
 
   }
-})}
+})
+this.navService.items=[];
+}
 }

@@ -3,19 +3,39 @@
     <h2>Welcome <span *ngIf="user">{{user.name}}</span></h2>
     <h3>What can we do for you?</h3>
     <div *ngIf="!user.name">
-    <p-button  (onClick)="searchFlight()" label="Search Flights"></p-button><br>
-    <p-button  (onClick)="bookTicket()" label="Book Ticket"></p-button><br>
-    <p-button  (onClick)="estimateTicket()" label="Estimate Travel"></p-button>
+    <div [ngStyle]="{'padding':'10px 10px'}" >
+    <p-button [ngStyle]="{'margin-bottom':'10px'}"  (onClick)="searchFlight()" label="Search Flights"></p-button><br>
+    </div>
+    <div  [ngStyle]="{'padding':'10px 10px'}">
+    <p-button [ngStyle]="{'margin-bottom':'10px'}"  (onClick)="bookTicket()" label="Book Ticket"></p-button><br>
 </div>
-<div *ngIf="user.name">
-    <div>
-    <p-button  (onClick)="manageBookings()" label="Your Bookings"></p-button>
-</div>
-<div>
-    <p-button  (onClick)="bookTicket()" label="Book Ticket"></p-button><br>
-</div>
-<div>
-    <p-button  (onClick)="viewBookings()" label="View Bookings"></p-button>
+<div  [ngStyle]="{'padding':'10px 10px'}">
+    <p-button [ngStyle]="{'margin-bottom':'10px'}"  (onClick)="estimateTicket()" label="Estimate Travel"></p-button>
 </div>
 </div>
+<div *ngIf="user.role==='USER'">
+
+<div  [ngStyle]="{'padding':'10px 10px'}">
+    <p-button [ngStyle]="{'margin-bottom':'10px'}" (onClick)="manageBookings()" label="Your Bookings"></p-button>
+</div>
+<div  [ngStyle]="{'padding':'10px 10px'}">
+    <p-button [ngStyle]="{'margin-bottom':'10px'}"  (onClick)="bookTicket()" label="Book Ticket"></p-button><br>
+</div>
+<div  [ngStyle]="{'padding':'10px 10px'}">
+    <p-button [ngStyle]="{'margin-bottom':'10px'}"  (onClick)="viewBookings()" label="View Bookings"></p-button>
+</div>
+</div>
+
+<div *ngIf="user.role==='ADMIN'">
+
+    <div  [ngStyle]="{'padding':'10px 10px'}">
+        <p-button [ngStyle]="{'margin-bottom':'10px'}" (onClick)="manageAirlines()" label="Manage Airlines"></p-button>
+    </div>
+    <div  [ngStyle]="{'padding':'10px 10px'}">
+        <p-button [ngStyle]="{'margin-bottom':'10px'}"  (onClick)="addAirlines()" label="Add Airlines"></p-button><br>
+    </div>
+    <div  [ngStyle]="{'padding':'10px 10px'}">
+        <p-button [ngStyle]="{'margin-bottom':'10px'}"  (onClick)="searchFlight()" label="View Flights"></p-button>
+    </div>
+    </div>
     <p-card>

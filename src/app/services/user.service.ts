@@ -9,24 +9,24 @@ import { User } from 'src/app/models/user.model';
 })
 export class UserService {
   serviceUrl='http://localhost:3000/';
+  url='http://localhost:8091/';
   public user:any;
   constructor( private http : HttpClient ) {
     this.user= {id:0,userId:'',name:'',password:'',role:''};
    }
 
   saveUser(user:any){
-    this.http.post(this.serviceUrl+'users',user).subscribe(data => {
+    user.active=true;
+    this.http.post(this.url+'register',user).subscribe(data => {
       console.log(data);
     
   });
 }
 
   getUser(name:string):Observable<User[]>{
-   console.log(this.serviceUrl+'users');
+   console.log(this.url+'user/'+name);
    var arr :User[]=[];
-    return this.http.get<User[]>(this.serviceUrl+'users?name='+name);
-   
-   
+    return this.http.get<User[]>(this.url+'user/'+name);  
   }
 
 

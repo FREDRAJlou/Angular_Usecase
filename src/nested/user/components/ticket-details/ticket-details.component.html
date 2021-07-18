@@ -12,9 +12,11 @@
                     <div class="p-col p-d-flex p-ai-center p-jc-center p-mx-auto">
                         <img src="https://cdn.dribbble.com/users/106029/screenshots/1874120/gruppr-dribbble.png" wight="100" height="70"/>
                      <div class="p-mx-auto" style="display:inline">
-                     <h2 class="p-mx-auto" [ngStyle]="{textAlign:'center',display:'inline'}">Onward - {{ticket.flight}} - {{ticket.onwardDate | date : 'short'}}</h2>
+                        <h2 class="p-mx-auto" [ngStyle]="{textAlign:'center',display:'inline'}">{{ticket.pnr}}</h2>
                      <br>
-                     <h2 class="p-mx-auto" *ngIf="ticket.type=='Round Trip'" [ngStyle]="{textAlign:'center',display:'inline'}">Return - {{ticket.returnFlight}} - {{ticket.returnDate | date : 'short'}}</h2>
+                     <h3 class="p-mx-auto" [ngStyle]="{textAlign:'center',display:'inline'}">Onward - {{ticket.flight}} - {{ticket.onwardDate | date : 'short'}}</h3>
+                     <br>
+                     <h3 class="p-mx-auto" *ngIf="ticket.type=='Round Trip'" [ngStyle]="{textAlign:'center',display:'inline'}">Return - {{ticket.returnFlight}} - {{ticket.returnDate | date : 'short'}}</h3>
                     </div>
                 </div>
                 </ng-template>

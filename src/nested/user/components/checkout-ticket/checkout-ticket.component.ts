@@ -5,6 +5,7 @@ import { ShareableDataService } from 'src/app/services/shareable-data.service';
 import { NavigationService } from 'src/nested/services/navigation.service';
 import { MsgService } from 'src/nested/services/msg.service';
 import { MessageService } from 'primeng/api';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-checkout-ticket',
@@ -18,7 +19,7 @@ export class CheckoutTicketComponent implements OnInit {
   passengers : Array<any>=[{}];
   ticket :any={};
   meals =[{name:'Veg'},{name:'Non-Veg'},{name:'None'}];
-  constructor(private msg : MessageService,private msgService : MsgService,private navService : NavigationService,private service : FlightService, private route : Router, private shared : ShareableDataService) { 
+  constructor(private share : ShareableDataService,private msg : MessageService,private msgService : MsgService,private navService : NavigationService,private service : FlightService, private route : Router, private shared : ShareableDataService) { 
    
   }
 
@@ -48,8 +49,8 @@ export class CheckoutTicketComponent implements OnInit {
 
   applyDiscount(){
     if(this.discount!=''){
-      this.service.getDiscounts("?code='"+this.discount.toUpperCase+"'").subscribe(data=>{
-        console.log("?code='"+this.discount+"'"+data);
+      this.service.getDiscounts("?code="+this.discount.toUpperCase()).subscribe(data=>{
+        console.log(data);
         if(data[0]!=null&&data[0].discount!=0)
       this.totalPrice = (this.totalPrice/100)*(100-data[0].discount);
       });
@@ -58,8 +59,29 @@ export class CheckoutTicketComponent implements OnInit {
     this.msgService.infoMsg("Discount Applied");
   }
 
+  validateCheckout(){
+   for(let i = 0; i <this.ticket.passengers.length; i++){
+      let pass=this.ticket.passengers[i];
+      if(pass?.name==''){
+        this.msgService.warningMsg('Passenger name required');
+        return true;
+      }
+      if(pass.age==''){
+        this.msgService.warningMsg('Passenger age required');
+        return true;
+      }
+      if(pass.meal==''){
+        this.msgService.warningMsg('Select Meal preference');
+        return true;
+      }
+    }
+      return false;
+  }
+
   checkout(){
-   var ticket  ={type:'',logo:'',booker:'',price:0,onwardDate:'',returnDate:'',flight:'',returnFlight:'',from:'',to:'',date:new Date(),id:'',passengers:[{}]}
+    if(this.validateCheckout())
+    return;
+   var ticket  ={pnr:'',type:'',logo:'',booker:'',price:0,onwardDate:'',returnDate:'',flight:'',returnFlight:'',from:'',to:'',date:new Date(),id:'',passengers:[{}]}
     ticket.flight = this.ticket.flight;
     ticket.returnFlight = this.ticket.returnFlight;
     ticket.logo = this.ticket.logo;
@@ -80,13 +102,13 @@ export class CheckoutTicketComponent implements OnInit {
    ticket.date = new Date();
     ticket.price = this.totalPrice;
     ticket.booker = this.navService.user.name;
+   ticket.pnr = Math.floor((Math.random() * 100) + 1)+ticket.from.substring(0,3).toUpperCase()+ticket.to.substring(0,3).toUpperCase();
     console.log(ticket);
-   var ans =  prompt('Y/N');
-   if(ans=='Y')
     this.service.bookFlight(ticket);
      this.msg.add({severity:'info', summary:"Ticket Booked ", detail:""});
     this.msgService.infoMsg("Ticket Booked ");
-    this.route.navigate(['./user/bookingHistory']);
+    this.share.sendData(ticket);
+    this.route.navigate(['./user/ticketDetails']);
   }
 
 }

@@ -3,6 +3,8 @@
        <span><img width="75" height="45" src="https://cdn.dribbble.com/users/106029/screenshots/1874120/gruppr-dribbble.png"/>  <Span style="font-size:20px;margin-left:10px;margin-bottom:10px;">Flight Booking</Span></span>
     </ng-template>
     <app-navbar></app-navbar>
+    <p-progressBar mode="indeterminate" *ngIf="loading"></p-progressBar>
+    <!-- <p-progressSpinner animationDuration="1s"></p-progressSpinner> -->
     <router-outlet></router-outlet>
     <ng-template pTemplate="footer"><div  style="text-align: center;">
        Copyrights reserved to the company - version-29.0.4

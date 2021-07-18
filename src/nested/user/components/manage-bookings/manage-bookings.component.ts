@@ -17,7 +17,7 @@ import {Inject,LOCALE_ID } from '@angular/core';
 })
 export class ManageBookingComponent implements OnInit {
     bookings : any;
-    cuurentDate = new Date();
+    currentDate = new Date();
     deleteTicket:any;
     // exportColumns:any[]=[];
     cols:any[]=[];
@@ -28,6 +28,10 @@ export class ManageBookingComponent implements OnInit {
   ngOnInit(): void {
     this.flightService.getBookings("").subscribe((data) => {
       this.bookings=data;
+      for(let i = 0; i < this.bookings.length; i++){
+        this.bookings[i].cancel = this.cancellable(this.bookings[i].onwardDate);
+      console.log(this.bookings[i].onwardDate+" => "+(this.bookings[i].onwardDate>this.currentDate));
+      }
     })   ; 
     this.cols  = [
       { title: "From", dataKey: "from" },
@@ -42,6 +46,16 @@ export class ManageBookingComponent implements OnInit {
     ];
 
   // this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
+ }
+
+
+
+ cancellable(date1:Date){
+  console.log("Entering cancellable "+date1)
+  let date = new Date(date1);
+  let curr = new Date();
+  console.log(date+" > "+curr +" = "+ (date >curr));
+  return date>curr;
  }
 
  ticketDetail(ticket:any){

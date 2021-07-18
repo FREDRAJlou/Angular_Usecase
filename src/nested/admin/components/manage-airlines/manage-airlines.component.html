@@ -1,36 +1,36 @@
 <p-card>             <p-toast position="top-right"></p-toast>       
-                    <p-table [value]="flights" [scrollable]="true"  scrollHeight="200px">
+                    <p-table [value]="airlines" [scrollable]="true"  scrollHeight="200px">
                         <ng-template pTemplate="caption">
                             <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
                                 Available Flights
                             </div>
-                            <!-- <div class="p-d-flex">
-                                <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-                                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
-                                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
-                                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
-                            </div> -->
+                           
                         </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Logo</th>
                                 <!-- <th>Flight</th> -->
-                                <th>Price</th>
-                                <th>Depature</th>
-                               <th>Contact</th>
-                                <th>Model</th> 
+                                <th>Airline Name</th>
+                                <!-- <th>Depature</th> -->
+                               <th>Contact Number</th>
+                                <th>Contact Address</th> 
+                                <th>Manage Flights</th>
                                <th>Action</th>        
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-flight >
                             <tr>
                                 <td><img [src]="flight.logo" [alt]="flight.name" width="50" height="35" class="p-shadow-4" /></td>
-                                <!-- <td>{{flight.name}}</td> -->
-                                <td>{{flight.price}}</td> 
-                                <td>{{flight.schedule}}</td>
+                                <td>{{flight.name}}</td>
+                                <!-- <td>{{flight.price}}</td> 
+                                <td>{{flight.schedule}}</td> -->
                                 <td>{{flight.contactNumber}}</td>  
-                                <td>{{flight.model}}</td>  
-                                <td> <p-button label="Delete" (onClick)="deleteAirline(flight)"></p-button></td>       
+                                <td>{{flight.contactAddress}}</td>  
+                                <td> <p-button label="Flights" (onClick)="manageFlights(flight)"></p-button>
+                                    </td>
+                                    <td>
+                                    <p-button label="Delete" (onClick)="deleteAirline(flight)"></p-button>   
+                                </td>       
                             </tr>
                         </ng-template>
                       </p-table>

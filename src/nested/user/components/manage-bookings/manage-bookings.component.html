@@ -10,26 +10,35 @@
     
     </li>
     </ol> -->
-    <p-table #dt [columns]="cols" [value]="bookings" [scrollable]="true"  scrollHeight="300px">
+    <p-table #dt [columns]="cols" [value]="bookings" [scrollable]="true" 
+    [globalFilterFields]="['pnr']"
+     scrollHeight="300px">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
                 Available Bookings
             </div>
-            <ng-template pTemplate="caption">
-                <div class="p-d-flex">
-                    <!-- <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
-                    <!-- <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf(ticket)" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
-                    <!-- <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button> -->
-                </div>
             </ng-template>
-        </ng-template>
+            <!-- <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                    <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search By PNR" />
+                    </span>
+                </div>
+            </ng-template> -->
         <ng-template pTemplate="header">
             <tr>
                 <!-- <th>Flight</th>
                 <th>Date</th>
                 <th>Return Flight</th>
                 <th>Return Date</th> -->
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        PNR 
+                        <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                    </div>
+                </th>
                 <th>Type</th>
                 <th>Price</th>
                 <th>Booking Date</th>
@@ -40,16 +49,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-book>
             <tr>
-                <!-- <td>{{book.flight}}</td>
-                <td>{{book.onwardDate|date:'short'}}</td>
-                <td>{{book.returnFlight}}</td>
-                <td>{{book.returnDate|date:'short'}}</td> -->
+                 <td >{{book.pnr}}</td>
                 <td>{{book.type}}</td>
                 <td>{{book.price}}</td> 
                 <td>{{book.date|date:'short'}}</td>
                 <td><p-button  (onClick)="ticketDetail(book)" label="View"></p-button></td>  
                 <td><button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf(book)" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button></td>
-                <td><p-button *ngIf="!book.cancelFlag" (onClick)="cancelTicket(book)" label="Cancel"></p-button></td>         
+                <td><p-button *ngIf="cancellable(book.onwardDate)" (onClick)="cancelTicket(book)" label="Cancel"></p-button></td>         
             </tr>
         </ng-template>
       </p-table>

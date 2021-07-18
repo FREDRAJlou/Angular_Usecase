@@ -4,30 +4,30 @@
         <div class="p-col-12 p-md-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">Airline name :</span>
-                <input type="text" pInputText [(ngModel)]="flight.name" required placeholder="UserName">         
+                <input type="text" pInputText [(ngModel)]="airline.name" required placeholder="UserName">         
             </div>
         </div>
         <div>
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Logo Url :</span>
-                    <input type="text" pInputText [(ngModel)]="flight.logo" required placeholder="Logo Url">         
+                    <input type="text" pInputText [(ngModel)]="airline.logo" required placeholder="Logo Url">         
                 </div>
             </div>
         </div>
-        <div>
+        <!-- <div>
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Model :</span>
-                    <input type="text" pInputText [(ngModel)]="flight.model" required placeholder="Model">         
+                    <input type="text" pInputText [(ngModel)]="airline.model" required placeholder="Model">         
                 </div>
             </div>
-            </div>
-        <div>
+            </div>-->
+        <div> 
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Contact Number :</span>
-                    <p-inputNumber [(ngModel)]="flight.contactNumber" [useGrouping]="false" [min]="1" [max]="9999999999">
+                    <p-inputNumber [(ngModel)]="airline.contactNumber" [useGrouping]="false" [min]="1" [max]="9999999999">
 
                     </p-inputNumber>
                 </div>
@@ -37,7 +37,7 @@
         <div class="p-col-12 p-md-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">contact Address :</span>
-                <input type="text" pInputText [(ngModel)]="flight.contactAddress" required placeholder="Address">         
+                <input type="text" pInputText [(ngModel)]="airline.contactAddress" required placeholder="Address">         
             </div>
         </div>
         </div>

@@ -11,24 +11,36 @@ export class NavigationService {
   user: any ={};
   constructor() {
     this.userItems=[];
+   this.items=[{
+    label: 'Home', routerLink:"./home"},
+    {label: 'About', routerLink:"./about"},
+     { label: 'Flights', routerLink:"./flights"
+    },{ label: 'Login/Register', routerLink:"./login"}
+   ]
+   }
+   setNavBar(){
     this.items=[{
       label: 'Home', routerLink:"./home"},
       {label: 'About', routerLink:"./about"},
        { label: 'Flights', routerLink:"./flights"
       },
      ]
-     if(this.user.valid){
-       this.items.push( { label: 'LogOut', routerLink:"./home"
+     if(this.user.role!=''){
+       this.items.push( { label: 'LogOut', routerLink:"./home",command:()=>{
+         this.user={};
+       }
       });
      }else{
       this.items.push( { label: 'Login/Register', routerLink:"./login"});
      }
    }
+   
    setItems(menu:MenuItem[]){
     this.items=menu;
    }
 
    setUserNavigation(){
+    this.setNavBar();
     this.userItems=([{
       label: 'Book Flight', routerLink:"./user/bookFlight"},
       {label: 'Manage Bookings', routerLink:"./user/manageBooking"},
@@ -39,6 +51,7 @@ export class NavigationService {
   }
 
     setAdminNavigation(){
+      this.setNavBar();
       this.userItems=[{
         label: 'Manage Schedules', routerLink:"./user/bookFlight"},
         {label: 'Manage Discounts', routerLink:"./user/manageBooking"},

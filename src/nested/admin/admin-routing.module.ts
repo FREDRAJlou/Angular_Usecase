@@ -5,6 +5,9 @@ import { ManageAirlinesComponent } from './components/manage-airlines/manage-air
 import { ManageSchedulesComponent } from './components/manage-schedules/manage-schedules.component';
 import { ManageDiscountsComponent } from './components/manage-discounts/manage-discounts.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { ReportComponent } from './report/report.component';
+import { ManageFlightsComponent } from './components/manage-flights/manage-flights.component';
+
 
 
 const routes: Routes = [
@@ -13,7 +16,9 @@ const routes: Routes = [
     { path: 'manageSchedules', component: ManageSchedulesComponent},
    { path: 'manageDiscounts', component: ManageDiscountsComponent},
    { path: 'addAirlines', component: AddAirlinesComponent},
+   { path: 'manageFlights', component: ManageFlightsComponent},
    { path: 'manageAirlines', component: ManageAirlinesComponent},
+   { path: 'reports', component: ReportComponent},
   { path: '**', component: AdminHomeComponent}
   ]}
 ];

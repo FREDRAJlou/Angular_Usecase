@@ -10,14 +10,11 @@ import { FlightService } from 'src/nested/services/flight.service';
 })
 export class ManageAirlinesComponent implements OnInit {
 
-  flights:any=[];
+  airlines:any=[];
   constructor(private msgService: MessageService,private confirmationService: ConfirmationService,private route : Router,public service : FlightService) { }
 
   ngOnInit(): void {
-    this.service.getFlights('?').subscribe(data=>{
-      this.flights=data;
-      console.log(this.flights);
-    });
+    this.getAllAirlines();
   }
 
   addAirline(){
@@ -33,14 +30,23 @@ export class ManageAirlinesComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
          console.log('deleting '+flight.id);
-         this.service.deleteFlight(flight.id);
+         this.service.deleteAirline(flight.id);
          this.msgService.add({severity:'success', summary:'Airline Deleted', detail:""});
-         this.service.getFlights('?').subscribe(data=>{
-          this.flights=data;
-          console.log(this.flights);
-        });
+          this.getAllAirlines();
         }
     });
+  }
+
+getAllAirlines(){
+  this.service.getAirlines('getAllAirlines').subscribe(data=>{
+    this.airlines=data;
+    console.log(this.airlines);
+  });
+}
+
+  manageFlights(airline:any){
+    this.service.airline=airline;
+    this.route.navigate(["./admin/manageFlights"]);
   }
 
 

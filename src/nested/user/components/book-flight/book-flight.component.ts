@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { FlightService } from 'src/app/services/flight.service';
 import { ShareableDataService } from 'src/app/services/shareable-data.service';
 
@@ -17,7 +18,7 @@ export class BookFlightComponent implements OnInit {
   Locs =[{name:'Chennai',disabled:false},{name:'Bangalore',disabled:false},{name:'Kolkata',disabled:false},{name:'Pune',disabled:false},{name:'Mumbai',disabled:false}];
   fromLoc:any=[];
   toLoc:any=[];
-  constructor(public service : FlightService,private route : Router,private shared : ShareableDataService) { 
+  constructor(public service : FlightService,private route : Router,private shared : ShareableDataService,private msgService: MessageService) { 
     console.log("bbok Flight");
   }
 
@@ -35,6 +36,8 @@ export class BookFlightComponent implements OnInit {
     for(let i=0;i<this.toLoc.length;i++){
       if(this.toLoc[i]?.name==this.ticket.from)
       this.toLoc[i].disabled=true;
+      else
+      this.toLoc[i].disabled=false;
     }
     console.log('this.toLoc ='+this.toLoc);
   }
@@ -43,10 +46,14 @@ export class BookFlightComponent implements OnInit {
     for(let i=0;i<this.fromLoc.length;i++){
       if(this.fromLoc[i]?.name==this.ticket.to)
       this.fromLoc[i].disabled=true;
+      else
+      this.fromLoc[i].disabled=false;
     }
   }
 
   populateFlights(){
+    if(this.validateBooking())
+    return;
     console.log("inside populate flights");
     this.service.getFlights('?from='+this.ticket.from+'&to='+this.ticket.to).subscribe(data=>{
       this.flights=data;
@@ -72,8 +79,36 @@ export class BookFlightComponent implements OnInit {
     this.ticket.flight=this.service.selectedFlight.name;
   }
 
+  validateBooking(){
+    if(this.ticket.type=="Round Trip"){
+        if(this.ticket.returnDate==''){
+          this.msgService.add({severity:'warning', summary:'Return Date required', detail:""});
+          return true;
+        }
+        if(this.returnFlights.length!=0&&this.service.selectedReturnFlight?.id==''){
+          this.msgService.add({severity:'warning', summary:'Select Return Flight/ Change to One Way Travel', detail:""});
+          return true;
+        }
+      }
+      if(this.ticket.onwardDate==''){
+        this.msgService.add({severity:'warning', summary:'Onward Date required', detail:""});
+        return true;
+      }
+      if(this.flights.length!=0&&this.service.selectedFlight?.id==''){
+        this.msgService.add({severity:'warning', summary:'Select Flight', detail:""});
+        return true;
+      }
+      return false;
+  }
+
   continueBooking(){
-    this.ticket.price = this.service.selectedFlight.price+ this.service.selectedReturnFlight?.price;
+    if(this.validateBooking())
+    return;
+    this.ticket.price = this.service.selectedFlight.price;
+    if(this.service.selectedReturnFlight?.price){
+      console.log(this.service.selectedReturnFlight?.price)
+      this.ticket.price = this.ticket.price +this.service.selectedReturnFlight?.price;
+    }
     this.shared.sendData(this.ticket);
     this.route.navigate(['./user/checkoutTicket']);
   }

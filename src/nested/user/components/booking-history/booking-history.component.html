@@ -1,14 +1,19 @@
 <div class="card">
-<!-- <hr>
-<ol>
-<li *ngFor="let booking of bookings">
-    <div>
-<h4>{{booking.date}}-{{booking.flight}}-{{booking.id}}</h4>
-    </div>
-   
-
-</li>
-</ol> -->
+    <div class="p-grid p-fluid">
+        <div class="p-col-12 p-md-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">PNR Number :</span>
+                <input type="text" pInputText [(ngModel)]="pnr" placeholder="PNR number">         
+            </div>
+        </div>
+        
+        <div class="p-col-12 p-md-4">
+            <div class="p-inputgroup">
+                <p-button label="Find Booking" (onClick)="populateBookings()"></p-button>
+            </div>
+        </div>
+        
+        </div>
 <p-table [value]="bookings" [scrollable]="true"  scrollHeight="200px">
     <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
@@ -23,6 +28,7 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
+            <th>PNR</th>
             <th>Booking Date</th>
             <th>Price</th>
             <th>Type</th>
@@ -33,6 +39,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-book>
         <tr>
+            <td>{{book.pnr}}</td> 
             <td>{{book.date | date : 'short'}}</td>
             <!-- <td>{{book.flight}}</td>
             <td><img [src]="book.logo" [alt]="book.id" width="100" height="75" class="p-shadow-4" /></td> -->

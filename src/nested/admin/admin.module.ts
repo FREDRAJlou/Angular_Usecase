@@ -33,6 +33,10 @@ import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { RouterModule } from '@angular/router';
+import { ReportComponent } from './report/report.component';
+import {ChartModule} from 'primeng/chart';
+// import { AddFlightsComponent } from './components/add-flights/add-flights.component';
+import { ManageFlightsComponent } from './components/manage-flights/manage-flights.component';
 
 
 
@@ -43,7 +47,9 @@ import { RouterModule } from '@angular/router';
     ManageSchedulesComponent,
     ManageDiscountsComponent,
     AdminHomeComponent,
-    AdminNavBarComponent
+    AdminNavBarComponent,
+    ReportComponent,
+    ManageFlightsComponent
   ],
   imports:[
   HttpClientModule ,
@@ -67,7 +73,8 @@ ToastModule,
 ConfirmDialogModule,
 CommonModule,
 RouterModule,
-AdminRoutingModule
+AdminRoutingModule,
+ChartModule
   ],
   providers: [MessageService,ConfirmationService],
 })
