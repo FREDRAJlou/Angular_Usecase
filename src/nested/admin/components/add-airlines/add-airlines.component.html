@@ -4,7 +4,7 @@
         <div class="p-col-12 p-md-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">Airline name :</span>
-                <input type="text" pInputText [(ngModel)]="airline.name" required placeholder="UserName">         
+                <input type="text" pInputText [(ngModel)]="airline.name" required placeholder="Airline Name">         
             </div>
         </div>
         <div>
@@ -27,7 +27,7 @@
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Contact Number :</span>
-                    <p-inputNumber [(ngModel)]="airline.contactNumber" [useGrouping]="false" [min]="1" [max]="9999999999">
+                    <p-inputNumber placeholder="Contact Number" [(ngModel)]="airline.contactNumber" [useGrouping]="false" [min]="1" [max]="9999999999">
 
                     </p-inputNumber>
                 </div>

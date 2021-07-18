@@ -26,7 +26,7 @@ export class ManageBookingComponent implements OnInit {
  
 
   ngOnInit(): void {
-    this.flightService.getBookings("").subscribe((data) => {
+    this.flightService.getBookings("getAllBookings").subscribe((data) => {
       this.bookings=data;
       for(let i = 0; i < this.bookings.length; i++){
         this.bookings[i].cancel = this.cancellable(this.bookings[i].onwardDate);

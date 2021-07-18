@@ -19,19 +19,20 @@ export class BookingHistoryComponent implements OnInit {
  
 
     ngOnInit(): void {
-      this.flightService.getBookings("").subscribe((data) => {
+      this.flightService.getBookings("getAllBookings").subscribe((data) => {
         this.bookings=data;
       })   ; 
     }
 
     populateBookings(){
-      this.flightService.getBookings(this.pnr!=''?"?pnr="+this.pnr:"").subscribe((data) => {
+      this.flightService.getBookings(this.pnr!=''?"GetBookingByPnr/"+this.pnr:"getAllBookings").subscribe((data) => {
         this.bookings=data;
       })   ; 
     }
 
   ticketDetail(ticket:any){
-    this.service.sendData(ticket);
+    console.log(JSON.stringify(ticket));
+        this.service.sendData(ticket);
     this.route.navigate(['/user/ticketDetails']);
   }
 

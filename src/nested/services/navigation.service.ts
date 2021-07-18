@@ -38,7 +38,6 @@ export class NavigationService {
      console.log('inside setting logout'+this.user.role);
      if(this.user.role!=''){
        this.items.push( { label: 'LogOut', routerLink:"./home",command:()=>{
-         alert('clearing user');
          this.user={id:0,name:'',password:'',role:'',userId:''};
          this.setNavBar();
          this.route.navigate(["./home"]);

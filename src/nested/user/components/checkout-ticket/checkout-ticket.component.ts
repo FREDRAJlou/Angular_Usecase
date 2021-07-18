@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlightService } from 'src/nested/services/flight.service';
-import { ShareableDataService } from 'src/app/services/shareable-data.service';
+import { ShareableDataService } from 'src/nested/services/shareable-data.service';
 import { NavigationService } from 'src/nested/services/navigation.service';
 import { MsgService } from 'src/nested/services/msg.service';
 import { MessageService } from 'primeng/api';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-checkout-ticket',
@@ -26,12 +25,12 @@ export class CheckoutTicketComponent implements OnInit {
   ngOnInit(): void {
     this.count=1;
     this.totalPrice=0;
-    this.passengers=[{id:1,name:'',age:'',meal:'None',phone:''}];
     this.shared.msg.subscribe(data => {
       this.ticket = data;
       console.log("This Ticket ="+data);
       console.log("From  details obs"+JSON.stringify(this.ticket));
     });
+    this.ticket.passengers=[{id:1,name:'',age:'',meal:'None',phone:''}];
     this.totalPrice=this.ticket.price;
   }
 
@@ -49,10 +48,13 @@ export class CheckoutTicketComponent implements OnInit {
 
   applyDiscount(){
     if(this.discount!=''){
-      this.service.getDiscounts("?code="+this.discount.toUpperCase()).subscribe(data=>{
+      this.service.getDiscounts("getDiscountByCode/"+this.discount.toUpperCase()).subscribe(data=>{
         console.log(data);
         if(data[0]!=null&&data[0].discount!=0)
       this.totalPrice = (this.totalPrice/100)*(100-data[0].discount);
+      else{
+        this.msgService.errorMsg("Invalid Discount Code");
+      }
       });
     }
     this.msg.add({severity:'info', summary:"Discount Applied ", detail:""});
@@ -81,7 +83,7 @@ export class CheckoutTicketComponent implements OnInit {
   checkout(){
     if(this.validateCheckout())
     return;
-   var ticket  ={pnr:'',type:'',logo:'',booker:'',price:0,onwardDate:'',returnDate:'',flight:'',returnFlight:'',from:'',to:'',date:new Date(),id:'',passengers:[{}]}
+   var ticket  ={pnr:'',type:'',logo:'',booker:'',price:0,onwardDate:'',returnDate:'',flight:'',returnFlight:'',from:'',to:'',date:new Date(),id:0,passengers:[{}]}
     ticket.flight = this.ticket.flight;
     ticket.returnFlight = this.ticket.returnFlight;
     ticket.logo = this.ticket.logo;
@@ -98,15 +100,21 @@ export class CheckoutTicketComponent implements OnInit {
     //   }
     // }
 
-    ticket.passengers = this.passengers;
+    ticket.passengers = this.ticket.passengers;
    ticket.date = new Date();
     ticket.price = this.totalPrice;
     ticket.booker = this.navService.user.name;
    ticket.pnr = Math.floor((Math.random() * 100) + 1)+ticket.from.substring(0,3).toUpperCase()+ticket.to.substring(0,3).toUpperCase();
     console.log(ticket);
-    this.service.bookFlight(ticket);
+   if(this.service.bookFlight(ticket)){
+    console.log("Error");
+    this.route.navigate(['./error']);
+   return;
+   }
+   console.log("Success");
      this.msg.add({severity:'info', summary:"Ticket Booked ", detail:""});
     this.msgService.infoMsg("Ticket Booked ");
+    console.log("Ticket Details => "+ticket);
     this.share.sendData(ticket);
     this.route.navigate(['./user/ticketDetails']);
   }

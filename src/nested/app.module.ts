@@ -42,6 +42,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ProgressBarModule} from 'primeng/progressbar';
 import { AuthenticationGuardService } from './services/authentication-guard.service';
 import {ChartModule} from 'primeng/chart';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -57,7 +58,8 @@ import {ChartModule} from 'primeng/chart';
     // CapitalizePipe,
     AboutComponent,
     FlightsComponent,
-    LoginComponent
+    LoginComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

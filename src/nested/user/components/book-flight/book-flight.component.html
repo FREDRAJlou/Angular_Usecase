@@ -140,6 +140,6 @@
 
 </div>
 <ng-template pTemplate="footer">
-<p-button label="Continue Booking" (onClick)="continueBooking()"></p-button>
+<p-button label="Continue Booking" [disabled]="!this.service.selectedFlight.number" (onClick)="continueBooking()"></p-button>
 </ng-template>
 </p-panel>

@@ -8,7 +8,7 @@
                 </p-inputNumber>
      </div>
      </p-panel>
-    <p-table [value]="passengers" dataKey="pass.name" >
+    <p-table [value]="ticket.passengers" dataKey="pass.name" >
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between" style="text-align: center">
                 Add Passenger Details
@@ -59,10 +59,10 @@
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-dropdown [options]="meals" [(ngModel)]="pass.meal" optionLabel="name"></p-dropdown>
+                            <p-dropdown [options]="meals" [(ngModel)]="pass.meal"  optionValue="name" optionLabel="name"></p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{pass.meal.name}}
+                            {{pass.meal}}
                         </ng-template>
                     </p-cellEditor>
                 </td>

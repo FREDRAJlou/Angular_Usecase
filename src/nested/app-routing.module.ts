@@ -13,6 +13,7 @@ import {LoginComponent } from './components/login/login.component';
 import { UserComponent } from './user/user.component';
 import { UserHomeComponent } from './user/components/user-home/user-home.component';
 import { AuthenticationGuardService } from './services/authentication-guard.service';
+import { ErrorComponent } from './components/error/error.component';
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
       //   { path: 'user',  loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
       //   { path: 'admin',  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },]},
   //  
-  
+  { path: 'error', component: ErrorComponent},
      {path:'**', redirectTo:'home' }
 ];
 

@@ -11,7 +11,7 @@ export class FlightsComponent implements OnInit {
   constructor(public service : FlightService) { }
 
   ngOnInit(): void {
-    this.service.getFlights('getFlights').subscribe(data=>{
+    this.service.getFlightsFromBooking('getFlights').subscribe(data=>{
       this.flights=data;
       console.log(this.flights);
     });

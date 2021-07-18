@@ -42,6 +42,9 @@ search(){
   let query ="";
   let query1="";
   console.log("params => "+this.airline.name+""+this.airline.flightNumber+""+this.airline.model);
+  // this.service.getAirlines(this.airline.name).subscribe(data=>{
+  //     this.airline=data[0];
+  //     });
   if(this.airline.name){
     alert("Name => "+this.airline.name);
     query1=query1.concat(this.airline.name);
@@ -61,7 +64,6 @@ search(){
     console.log(this.flights);
 });
 }
-
   saveFlight(flight:any){
     if(flight.schedule==''){
       this.msgService.add({severity:'warning', summary:'Schedule required', detail:""});

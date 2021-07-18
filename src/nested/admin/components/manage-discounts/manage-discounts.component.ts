@@ -13,7 +13,7 @@ export class ManageDiscountsComponent implements OnInit {
   constructor(private msgService:MessageService,private route : Router,public service : FlightService) { }
 
   ngOnInit(): void {
-    this.service.getDiscounts('?').subscribe(data=>{
+    this.service.getDiscounts('getDiscounts').subscribe(data=>{
       this.discounts=data;
       console.log(this.discounts);
     });
@@ -24,9 +24,26 @@ export class ManageDiscountsComponent implements OnInit {
 
   }
 
+  validateDiscount(discount:any){
+    if(discount?.code===""){
+      console.log('throeing');
+      this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Discount Code required"});
+      return true;
+    }else if(discount?.discount===""){
+      this.msgService.add({severity:'warning', summary:'Warn Message', detail:"Discount Percentage required"});
+      return true;
+    }
+    return false;
+  }
+
   saveDiscount(discount:any){
+    if(this.validateDiscount(discount))
+    return;
     this.service.saveDiscount(discount);
     this.msgService.add({severity:'success', summary:'Discount data Saved', detail:""});
-    this.ngOnInit();
+    this.service.getDiscounts('getDiscounts').subscribe(data=>{
+      this.discounts=data;
+      console.log(this.discounts);
+    });
   }
 }

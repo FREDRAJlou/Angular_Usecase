@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { FlightService } from 'src/app/services/flight.service';
-import { ShareableDataService } from 'src/app/services/shareable-data.service';
+import { FlightService } from 'src/nested/services/flight.service';
+import { ShareableDataService } from 'src/nested/services/shareable-data.service';
 
 @Component({
   selector: 'app-book-flight',
@@ -55,11 +55,11 @@ export class BookFlightComponent implements OnInit {
     if(this.validateBooking())
     return;
     console.log("inside populate flights");
-    this.service.getFlights('?from='+this.ticket.from+'&to='+this.ticket.to).subscribe(data=>{
+    this.service.getFlightByLoc(this.ticket.from+','+this.ticket.to).subscribe(data=>{
       this.flights=data;
       console.log(this.flights);
     });
-    this.service.getFlights('?to='+this.ticket.from+'&from='+this.ticket.to).subscribe(data=>{
+    this.service.getFlightByLoc(this.ticket.to+','+this.ticket.from).subscribe(data=>{
       this.returnFlights=data;
       console.log(this.flights);
     });
@@ -69,13 +69,13 @@ export class BookFlightComponent implements OnInit {
   onRowSelect(event:any){
     console.log(event.data);
     console.log(this.service.selectedFlight);
-    this.ticket.flight=this.service.selectedFlight.name;
+    this.ticket.flight=this.service.selectedFlight.airline.name;
     this.ticket.returnFlight=this.service.selectedReturnFlight.name;
   }
   onRowUnselect(event:any){
     console.log(event.data);
     console.log(this.service.selectedFlight);
-    this.ticket.returnFlight=this.service.selectedReturnFlight.name;
+    this.ticket.returnFlight=this.service.selectedReturnFlight.airline.name;
     this.ticket.flight=this.service.selectedFlight.name;
   }
 
@@ -105,10 +105,13 @@ export class BookFlightComponent implements OnInit {
     if(this.validateBooking())
     return;
     this.ticket.price = this.service.selectedFlight.price;
+    // this.ticket.flight= this.service.selectedFlight.name;
     if(this.service.selectedReturnFlight?.price){
       console.log(this.service.selectedReturnFlight?.price)
       this.ticket.price = this.ticket.price +this.service.selectedReturnFlight?.price;
+      // this.ticket.returnFlight= this.service.selectedReturnFlight.name;
     }
+    console.log(JSON.stringify(this.ticket));
     this.shared.sendData(this.ticket);
     this.route.navigate(['./user/checkoutTicket']);
   }

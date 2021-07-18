@@ -35,7 +35,7 @@ search(){
   let query ="";
   let query1="";
   console.log("params => "+this.airline.name+""+this.airline.flightNumber+""+this.airline.model);
-  this.service.getAirlines("?name="+this.airline.name).subscribe(data=>{
+  this.service.getAirlines(this.airline.name).subscribe(data=>{
       this.airline=data[0];
       });
   if(this.airline.name){
